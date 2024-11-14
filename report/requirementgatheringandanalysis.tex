@@ -7,22 +7,21 @@ Requirement analysis in this project involves identifying the data that needs to
 \subsubsection{Discussion with an Event Organizer and students}
 
 Discussions with an event organizer and a student form the core of the analysis. Through these conversations, the aim is to identify the problems encountered in organizing campus events, managing attendees, and allocating resources. Below are some key points from the discussion.
-
 \begin{itemize}
-    \item \textbf{Question 1:} What are some challenges in managing events on campus?
-    
-    \textbf{Event Organizer:} We face issues coordinating with multiple departments, handling large attendance, and ensuring resource availability. With a few dozen events every month, things can get disorganized without a systematic approach.
-    
-    \item \textbf{Question 2:} Are there any other specific problems?
-    
-    \textbf{Event Organizer:} Yes. Scheduling conflicts in booking rooms and handling last-minute resource requests often arise.
-    With multiple events happening simultaneously, managing these details without a proper system becomes overwhelming.
-    
-    \item \textbf{Question 3:} What issues do participants face?
+    \item \textbf{Question 1:} What are some challenges in managing events and facilitating connections among students and teachers?
 
-    \textbf{Student:} Sometimes, event locations change at the last minute, and we don't get notified on time. We also find it challenging to track which events they've signed up for, especially during busy weeks with several overlapping activities.
+        \item \textbf{Event Organizer:} We face issues organizing events across various interests, as we have to coordinate with departments and manage resources like locations and materials. Also, students may not know about events that match their interests, limiting opportunities to connect.
+ 
+    
+    \item \textbf{Question 2:} How does the current system limit participant engagement?
 
-    \textbf{Event Organizer:} We also don't have a clear way to notify attendees if an event is canceled or rescheduled. It's frustrating when notifications aren't timely.
+        \item \textbf{Student:} Without a centralized platform, it’s challenging to keep track of events and connect with others who share similar interests. We want a way to see all available events, know who’s attending, and connect with participants after events.
+
+    
+    \item \textbf{Question 3:} What improvements would you like to see in event notifications and updates?
+
+        \item \textbf{Event Organizer:} Notifications for event updates, changes, or cancellations should be instant and accessible. Participants often don’t get updates in time, which can make engagement difficult.
+
 \end{itemize}
 
 \subsubsection{Understanding the Requirement}
@@ -32,9 +31,9 @@ After discussing these points, it was concluded that the system must handle all 
 Basic information requirements identified are:
 \begin{itemize}
     \item \textbf{Event Information}: Event name, date, time, location, and organizer.
-    \item \textbf{Participant Information}: Name, ID, email, and role in the event (e.g., attendee, speaker).
-    \item \textbf{Resource Information}: Type, availability, and quantity of resources.
-    \item \textbf{Location Information}: Room details, capacity, and availability for booking.
+    \item \textbf{Participant Information}: Name, ID, email.
+    % \item \textbf{Resource Information}: Type, availability, and quantity of resources.
+    \item \textbf{Location Information}: area details, capacity, and availability for booking.
 \end{itemize}
 
 \subsection{Identifying Stakeholders}
@@ -43,7 +42,7 @@ Since the system is being developed to address event management challenges faced
 
 \begin{itemize}
     \item \textbf{Event Organizers} (teachers, students, and staff involved in planning and managing events).
-    \item \textbf{Participants} (students, faculty, and guests attending events).
+    \item \textbf{Participants} (students, teachers).
     \item \textbf{Campus Administration} (managing location bookings and maintaining event records).
     % \item \textbf{IT Support Staff} (ensuring the smooth operation and maintenance of the system).
 \end{itemize}
@@ -55,3 +54,52 @@ As the Question , I aim to create a solution that is user-friendly and effective
 After analyzing requirements and identifying stakeholders, a \textbf{web-based system} has been selected for development. The next step is to design a conceptual model, focusing on a high-level view to confirm that it aligns with the specified requirements.
 
 The system will include features for event creation, participant registration, resource management, and real-time notifications, ensuring that all necessary information is accessible and manageable for everyone involved.
+
+
+
+% \section{Requirement Gathering and Analysis}
+% The campus event management system aims to connect students and teachers through campus events by facilitating the process of creating, joining, and managing events across a variety of interests, such as adventure, sports, and more. The system is inspired by platforms like Meetup.com, allowing users to discover events, connect with others, and join communities around shared interests. Requirements are developed after discussions with campus stakeholders to ensure it meets the needs of organizers and participants alike.
+
+% \subsection{Process of Requirement Analysis}
+% \subsubsection{Discussions with Event Organizers and Students}
+% Conversations with campus event organizers and students help to identify challenges in event management and understand the requirements for a system that encourages active participation and connection.
+
+% \begin{itemize}
+%     \item \textbf{Question 1:} What are some challenges in managing events and facilitating connections among students and teachers?
+
+%         \item \textbf{Event Organizer:} We face issues organizing events across various interests, as we have to coordinate with departments and manage resources like locations and materials. Also, students may not know about events that match their interests, limiting opportunities to connect.
+ 
+    
+%     \item \textbf{Question 2:} How does the current system limit participant engagement?
+
+%         \item \textbf{Student:} Without a centralized platform, it’s challenging to keep track of events and connect with others who share similar interests. We want a way to see all available events, know who’s attending, and connect with participants after events.
+
+    
+%     \item \textbf{Question 3:} What improvements would you like to see in event notifications and updates?
+
+%         \item \textbf{Event Organizer:} Notifications for event updates, changes, or cancellations should be instant and accessible. Participants often don’t get updates in time, which can make engagement difficult.
+
+% \end{itemize}
+
+% \subsubsection{Understanding the Requirements}
+% Based on these discussions, the campus event management system should simplify the event creation and joining process and foster communication among users. Key requirements include:
+
+% \begin{itemize}
+%     \item \textbf{Event Discovery and Connection:} Enable students and teachers to easily find events that match their interests and see who else is attending.
+%     \item \textbf{Participant Engagement:} Allow participants to connect before, during, and after events, encouraging a community of shared interests.
+%     \item \textbf{Timely Notifications:} Ensure that participants receive timely updates about any event changes or new opportunities.
+% \end{itemize}
+
+% \subsection{Identifying Stakeholders}
+% The system is designed to connect users and enhance event participation on campus. Key stakeholders include:
+
+% \begin{itemize}
+%     \item \textbf{Event Organizers} (teachers, students, and staff organizing campus activities).
+%     \item \textbf{Participants} (students, faculty, and guests attending events).
+%     \item \textbf{Campus Administration} (overseeing event logistics and venue availability).
+% \end{itemize}
+
+% The goal is to create a platform that is intuitive and effective for all users, encouraging students and faculty to engage with one another through campus events.
+
+% \subsection{System Specification}
+% Following the analysis, a web-based platform was chosen to best support the event management needs. The system will include features for event creation, participant registration, and real-time notifications to make all event-related information accessible to users, enhancing their ability to connect through shared interests.

@@ -1,4 +1,108 @@
 \section{Logical Modelling}\label{sec:lm}
-Write a short description of Relation model. 
-Write a how you convert your E-R model in Relational model
+After defining the conceptual model, we proceed with the logical data model for the Campus Event Management System.
+The logical model outlines the structure of the data items and their relationships in a formal way.
+For our system, we use the relational model.
+\subsection{Relational Model}
+In a relational model, data and their relationships are represented through a collection of interlinked tables.
+Each table contains rows and columns, where each column represents an attribute of an entity, and each row holds a record.
+The relational schema defines how each table (relation) is structured, specifying the table name and a list of attribute names, each tied to a specific domain.
+
+\subsubsection{Tables and Attributes}
+
+\begin{itemize}
+    \item \textbf{User} \\
+        \texttt{user(username, username, email, password, user\_type, department, contact\_number)} \\
+        \textbf{Primary Key:} username \\
+
+    \item \textbf{Student} \\
+        \texttt{student(student\_id, enrollment\_date,department, username)} \\
+        \textbf{Primary Key:} student\_id \\
+        \textbf{Foreign Key:} username $\rightarrow$ user(username)
+    
+    \item \textbf{Teacher} \\
+        \texttt{teacher(teacher\_id, employment\_date, department, username)} \\
+        \textbf{Primary Key:} teacher\_id \\
+        \textbf{Foreign Keys:} \\
+        \hspace*{1cm} username $\rightarrow$ user(username)
+        
+    \item \textbf{Location} \\
+        \texttt{location(location\_id, address, description is\_available)} \\
+        \textbf{Primary Key:} location\_id
+        
+    \item \textbf{Event\_Category} \\
+        \texttt{event\_category(category\_id, category\_name)} \\
+        \textbf{Primary Key:} category\_id
+        
+    \item \textbf{Event} \\
+        \texttt{event(event\_id, event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, currently\_registered, category\_id, location\_id)} \\
+        \textbf{Primary Key:} event\_id \\
+        \textbf{Foreign Keys:} \\
+        \hspace*{1cm} category\_id $\rightarrow$ event\_category(category\_id) \\
+        \hspace*{1cm} location\_id $\rightarrow$ location(location\_id)
+        
+    \item \textbf{Registers} \\
+        \texttt{registers(username, event\_id, registration\_date)} \\
+        \textbf{Primary Key:} (username, event\_id) \\
+        \textbf{Foreign Keys:} \\
+        \hspace*{1cm} username $\rightarrow$ user(username) \\
+        \hspace*{1cm} event\_id $\rightarrow$ event(event\_id)
+        
+    \item \textbf{Organized\_By} \\
+        \texttt{organized\_by(username, event\_id)} \\
+        \textbf{Primary Key:} (username, event\_id) \\
+        \textbf{Foreign Keys:} \\
+        \hspace*{1cm} username $\rightarrow$ user(username) \\
+        \hspace*{1cm} event\_id $\rightarrow$ event(event\_id)
+\end{itemize}
+
 \clearpage
+
+
+% \section{Logical Modeling}
+
+% After defining the conceptual model, we proceed with the logical data model for the Campus Event Management System.
+% The logical model outlines the structure of the data items and their relationships in a formal way.
+% For our system, we use the relational model.
+
+% \subsection{Relational Model}
+
+% In a relational model, data and their relationships are represented through a collection of interlinked tables.
+% Each table contains rows and columns, where each column represents an attribute of an entity, and each row holds a record.
+% The relational schema defines how each table (relation) is structured, specifying the table name and a list of attribute names, each tied to a specific domain.
+
+% \subsection{ER Model to Relational Schema}
+
+% The following steps were used to map our ER model to the relational schema:
+
+% \begin{enumerate}
+%     \item Each entity type is converted to a table, with each entity attribute becoming a column.
+%     \item A primary key is assigned to each table to uniquely identify each row. The primary key may be a single attribute or a combination of attributes.
+%     \item For a many-to-many relationship, a separate relationship table is created. This table has a composite primary key, consisting of the primary keys of the linked entities, and any additional attributes specific to the relationship.
+%     \item In a one-to-one relationship, the primary key of either entity is added as a foreign key to the other. For one-to-many or many-to-one relationships, the foreign key from one side is added to the many side.
+% \end{enumerate}
+
+% In our database schema for the \texttt{campus\_event} system, all user-related information (such as student or teacher details) is stored in the \texttt{user} table, where \texttt{username} is the primary key. This table includes attributes like \texttt{username}, \texttt{name}, \texttt{email}, \texttt{password}, \texttt{user\_type}, and \texttt{contact\_number}.
+
+% The \texttt{event} table holds details of each campus event, including attributes such as \texttt{event\_id} (primary key), \texttt{event\_name}, \texttt{description}, \texttt{event\_date}, \texttt{start\_time}, \texttt{end\_time}, \texttt{status}, \texttt{max\_attendees},\\
+% \texttt{currently\_registered}, \texttt{category\_id}, and \texttt{location\_id}. \texttt{category\_id} and \texttt{location\_id} are foreign keys referencing the \texttt{event\_category} and \texttt{location} tables, respectively.
+
+% Since there is a many-to-many relationship between \texttt{user} and \texttt{event} (as multiple users can register for multiple events), we have a \texttt{registers} table. This table uses a composite primary key made up of \texttt{username} and \texttt{event\_id} to uniquely identify each registration. Additionally, it includes the attribute \texttt{registration\_date} to store the date of each registration.
+
+% The \texttt{organized\_by} table represents the relationship between organizers (users) and events they manage, with \texttt{username} and \texttt{event\_id} as a composite primary key. In this table, \texttt{username} references the primary key in the \texttt{user} table, while \texttt{event\_id} references the primary key in the \texttt{event} table.
+
+% There is also a one-to-many relationship between \texttt{event} and \texttt{user}, where each \texttt{event} can be created by a user with a specific \texttt{username}.
+
+% \subsection{List of Relational Schemas for Our System}
+
+% \begin{itemize}
+%     \item \texttt{user(username, name, email, password, user\_type, contact\_number)}
+%     \item \texttt{student(student\_id, enrollment\_date, username, department)}
+%     \item \texttt{teacher(teacher\_id, employment\_date, username)}
+%     \item \texttt{event(event\_id, event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, currently\_registered, category\_id, location\_id)}
+%     \item \texttt{event\_category(category\_id, category\_name)}
+%     \item \texttt{location(location\_id, address, description, is\_available)}
+%     \item \texttt{registers(username, event\_id, registration\_date)}
+%     \item \texttt{organized\_by(username, event\_id)}
+% \end{itemize}
+
+% This relational schema provides a structured view of the Campus Event Management System, detailing each table’s attributes and their relationships in the database.
