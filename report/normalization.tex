@@ -155,22 +155,44 @@ Normalization is a process used to minimize or remove data redundancy in a set o
 
 The \texttt{user} table has the attributes:
 \[
-\{ \texttt{username}, \texttt{name}, \texttt{email}, \texttt{password}, \texttt{user\_type}, \texttt{department}, \texttt{contact\_number} \}
+\{ \texttt{username}, \texttt{name}, \texttt{email}, \texttt{password}, \texttt{user\_type}, \texttt{contact\_number} \}
 \]
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.7]{images/table_data/user_table.png}
+\end{figure}
+% \csvautotabular{table_data/user.csv}
 
-Based on the demo data, we identify the following functional dependencies and analyze the candidate keys, prime attributes, and non-prime attributes to determine its normalization status.
+% \pgfplotstabletypeset[
+%     col sep=comma, % Define column separator
+%     header=true, % Use the first row as headers
+%     every head row/.style={before row=\hline, after row=\hline}, % Add horizontal lines
+%     every last row/.style={after row=\hline}
+% ]{table_data/user.csv} 
+
+
+Based on the demo data, we identify the following functional dependencies and analyze the candidate keys, 
+prime attributes, and non-prime attributes to determine its normalization status.
 
 \begin{itemize}
     \item \textbf{Functional Dependencies:}
     \begin{itemize}
-        \item \texttt{username} $\rightarrow$ \texttt{name, email, password, user\_type, department, contact\_number}
+        \item \texttt{\underline{username}} $\rightarrow$ \texttt{username,name, email, password, user\_type, contact\_number}
+    \end{itemize}
+    \begin{itemize}
+        \item \texttt{email}$\rightarrow$ \texttt{username,name, email, password, user\_type, contact\_number}
+    \end{itemize}
+    \begin{itemize}
+        \item \texttt{contact\_number} $\rightarrow$ \texttt{username,name, email, password, user\_type, contact\_number}
     \end{itemize}
 
-    \item \textbf{Candidate Keys:} \texttt{username}
-    
-    \item \textbf{Prime Attributes:} \texttt{username}
 
-    \item \textbf{Non-Prime Attributes:} \texttt{name, email, password, user\_type, department, contact\_number}
+
+    \item \textbf{Candidate Keys:} \texttt{username, email, contact\_number}
+    
+    \item \textbf{Prime Attributes:} \texttt{username,email, contact\_number}
+
+    \item \textbf{Non-Prime Attributes:} \texttt{name, password, user\_type}
 
     \item \textbf{Analysis:} Based on our analysis, all the functional dependencies in the \texttt{user} table have a candidate key on the left-hand side. This satisfies the requirements of 3NF, and no transitive dependencies are present. All non-prime attributes (name, email, password, user\_type, department, and contact\_number) are fully functionally dependent on the candidate key, \texttt{username}.
 
@@ -183,7 +205,11 @@ The \texttt{student} table has the attributes:
 \[
 \{ \texttt{student\_id}, \texttt{enrollment\_date}, \texttt{username} \}
 \]
-
+\begin{figure}
+    [h]
+    \centering
+    \includegraphics{images/table_data/student_table (1).png}
+\end{figure}
 \begin{itemize}
     \item \textbf{Functional Dependencies:}
     \begin{itemize}
@@ -207,7 +233,11 @@ The \texttt{teacher} table has the attributes:
 \[
 \{ \texttt{teacher\_id}, \texttt{employment\_date}, \texttt{username} \}
 \]
-
+\begin{figure}
+    [h]
+    \centering
+    \includegraphics{images/table_data/teacher_table.png}
+\end{figure}
 \begin{itemize}
     \item \textbf{Functional Dependencies:}
     \begin{itemize}
@@ -225,26 +255,66 @@ The \texttt{teacher} table has the attributes:
     \item \textbf{Conclusion:} The \texttt{teacher} table is in 3NF.
 \end{itemize}
 
+\subsection{Normalizing venue Table}
+
+The \texttt{venue} table has the attributes:
+\[
+\{ \texttt{venue\_id}, \texttt{venue\_name} , \texttt{location\_id}\}
+\]
+\begin{figure}
+    [h]
+    \centering
+    \includegraphics{images/table_data/venue_table.png}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Functional Dependencies:}
+    \begin{itemize}
+        \item \texttt{venue\_id} $\rightarrow$ \texttt{venue\_name, location\_id}
+    \end{itemize}
+
+    \item \textbf{Candidate Keys:} \texttt{venue\_id}
+
+    \item \textbf{Prime Attributes:} \texttt{venue\_id}
+
+    \item \textbf{Non-Prime Attributes:} \texttt{venue\_name,location\_id}
+
+    \item \textbf{Analysis:} The functional dependency has a candidate key 
+    (\texttt{venue\_id}) on the left-hand side. This satisfies the conditions of 3NF, 
+    and there are no transitive dependencies. All non-prime attributes 
+    (\texttt{venue\_name,location\_id}) are fully functionally dependent on \texttt{venue\_id}.
+
+    \item \textbf{Conclusion:} The \texttt{venue} table is in 3NF.
+\end{itemize}
+
+
+
 \subsection{Normalizing location Table}
 
 The \texttt{location} table has the attributes:
 \[
-\{ \texttt{location\_id}, \texttt{address}, \texttt{description}, \texttt{is\_available} \}
+\{ \texttt{location\_id}, \texttt{location\_name} \}
 \]
-
+\begin{figure}
+    [h]
+    \centering
+    \includegraphics{images/table_data/location_table.png}
+\end{figure}
 \begin{itemize}
     \item \textbf{Functional Dependencies:}
     \begin{itemize}
-        \item \texttt{location\_id} $\rightarrow$ \texttt{address, description, is\_available}
+        \item \texttt{location\_id} $\rightarrow$ \texttt{location\_name}
     \end{itemize}
 
     \item \textbf{Candidate Keys:} \texttt{location\_id}
 
     \item \textbf{Prime Attributes:} \texttt{location\_id}
 
-    \item \textbf{Non-Prime Attributes:} \texttt{address, description, is\_available}
+    \item \textbf{Non-Prime Attributes:} \texttt{location\_name}
 
-    \item \textbf{Analysis:} The functional dependency has a candidate key (\texttt{location\_id}) on the left-hand side. This satisfies the conditions of 3NF, and there are no transitive dependencies. All non-prime attributes (\texttt{address, description, is\_available}) are fully functionally dependent on \texttt{location\_id}.
+    \item \textbf{Analysis:} The functional dependency has a candidate key 
+    (\texttt{location\_id}) on the left-hand side. This satisfies the conditions of 3NF, 
+    and there are no transitive dependencies. All non-prime attributes 
+    (\texttt{location\_name}) are fully functionally dependent on \texttt{location\_id}.
 
     \item \textbf{Conclusion:} The \texttt{location} table is in 3NF.
 \end{itemize}
@@ -255,7 +325,11 @@ The \texttt{event\_category} table has the attributes:
 \[
 \{ \texttt{category\_id}, \texttt{category\_name} \}
 \]
-
+\begin{figure}
+    [h]
+    \centering
+    \includegraphics{images/table_data/event_category.png}
+\end{figure}
 \begin{itemize}
     \item \textbf{Functional Dependencies:}
     \begin{itemize}
@@ -277,20 +351,26 @@ The \texttt{event\_category} table has the attributes:
 
 The \texttt{event} table has the attributes:
 \[
-\{ \texttt{event\_id}, \texttt{event\_name}, \texttt{description}, \texttt{event\_date}, \texttt{start\_time}, \texttt{end\_time}, \texttt{status}, \texttt{max\_attendees}, \texttt{currently\_registered}, \texttt{category\_id}, \texttt{location\_id} \}
+\{ \texttt{event\_id}, \texttt{event\_name}, \texttt{description}, \texttt{event\_date}, \texttt{start\_time}, \texttt{end\_time}, \texttt{status}, \texttt{max\_attendees}, \texttt{category\_id}, \texttt{venue\_id} \}
 \]
+
+\begin{figure}
+    [h]
+    \centering
+    \includegraphics{images/table_data/event.png}
+\end{figure}
 
 \begin{itemize}
     \item \textbf{Functional Dependencies:}
     \begin{itemize}
-        \item \texttt{event\_id} $\rightarrow$ \texttt{event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, currently\_registered, category\_id, location\_id}
+        \item \texttt{event\_id} $\rightarrow$ \texttt{event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, category\_id, venue\_id}
     \end{itemize}
 
     \item \textbf{Candidate Keys:} \texttt{event\_id}
 
     \item \textbf{Prime Attributes:} \texttt{event\_id}
 
-    \item \textbf{Non-Prime Attributes:} \texttt{event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, currently\_registered, category\_id, location\_id}
+    \item \textbf{Non-Prime Attributes:} \texttt{event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, category\_id, venue\_id}
 
     \item \textbf{Analysis:} All functional dependencies have a candidate key (\texttt{event\_id}) on the left-hand side. There are no transitive dependencies, and all non-prime attributes are fully functionally dependent on \texttt{event\_id}, fulfilling 3NF.
 

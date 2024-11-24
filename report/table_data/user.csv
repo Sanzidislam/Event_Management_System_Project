@@ -1,0 +1,6 @@
+username,name,email,password,user_type,contact_number
+arafat123,"Arafat Sheikh",arafat@example.com,password789,student,01733333333
+jane_smith,"Jane Smith",jane@example.com,password456,teacher,01722222222
+lisa_brown,"Lisa Brown",lisa@example.com,password321,teacher,01744444444
+nazmul,"Nazmul Hasan",namzul@example.com,password654,student,01755555555
+sanzid,"Sanzid Islam",sanzid@example.com,password123,student,01711111111

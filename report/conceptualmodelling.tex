@@ -112,7 +112,7 @@ From the analysis, the following \textbf{entities} and \textbf{relationships} ha
         \item \texttt{student\_id} (Primary Key)
         \item \texttt{enrollment\_date}
         \item \texttt{username} (Foreign Key referencing \texttt{User.username})
-        \item \texttt{department}
+
     \end{itemize}
 
     \item \textbf{Teacher}: Represents faculty members involved in events, with attributes:
@@ -132,19 +132,25 @@ From the analysis, the following \textbf{entities} and \textbf{relationships} ha
         \item \texttt{end\_time}
         \item \texttt{status} (enum: `pending`, `ongoing`, `finished`)
         \item \texttt{max\_attendees}
-        \item \texttt{currently\_registered}
+        
         \item \texttt{category\_id} (Foreign Key referencing \texttt{Event\_Category.category\_id})
         \item \texttt{location\_id} (Foreign Key referencing \texttt{Location.location\_id})
     \end{itemize}
 
-    \item \textbf{Location}: Represents locations where events are held, with attributes:
+    \item \textbf{Location}: Represents locations of the venues:
     \begin{itemize}
         \item \texttt{location\_id} (Primary Key)
-        \item \texttt{address}
-        \item \texttt{description}
-        \item \texttt{is\_available}
+        \item \texttt{location\_name}
     \end{itemize}
 
+    \item \textbf{Venue}: Represents locations where events are held, with attributes:
+    \begin{itemize}
+        \item \texttt{venue\_id} (Primary Key)
+        \item \texttt{venue\_name}
+        \item \texttt{location\_id} (Foreign Key referencing \texttt{Location.location\_id})
+    \end{itemize}
+
+    
     \item \textbf{Event Category}: Represents categories for events, with attributes:
     \begin{itemize}
         \item \texttt{category\_id} (Primary Key)
@@ -170,17 +176,23 @@ The relationships between the entities are as follows:
         \item \texttt{registration\_date}
     \end{itemize}
 
-    \item \textbf{Located At}: Connects \texttt{Event} and \texttt{Location}, where each event is held at a specified location.
+    \item \textbf{held At}: Connects \texttt{Event} and \texttt{Venue}, where each event is held at a specified venue.
     \begin{itemize}
-        \item \texttt{location\_id} (Foreign Key referencing \texttt{Location.location\_id})
+        \item \texttt{venue\_id} (Foreign Key referencing \texttt{Venue.venue\_id})
         \item \texttt{event\_id} (Foreign Key referencing \texttt{Event.event\_id})
+    \end{itemize}
+    \item \textbf{located in}: Connects \texttt{Venue} and \texttt{Location}, where each venue is located in a specified location.
+    \begin{itemize}
+        \item \texttt{venue\_id} (Foreign Key referencing \texttt{Venue.venue\_id})
+        \item \texttt{location\_id} (Foreign Key referencing \texttt{Location.location\_id})
     \end{itemize}
 \end{itemize}
 \newpage
 \begin{figure}[h]
     \centering
-    \hspace*{-2.5cm} % Adjust this value for the desired left margin
-    \includegraphics[scale=.4]{images/er_diagram.jpg}
+    \vspace{-1cm}
+    \hspace*{-3cm} % Adjust this value for the desired left margin
+    \includegraphics[scale=.4]{images/meetup2.0.drawio.png}
 \end{figure}
 
 

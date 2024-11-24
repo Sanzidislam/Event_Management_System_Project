@@ -11,22 +11,27 @@ The relational schema defines how each table (relation) is structured, specifyin
 
 \begin{itemize}
     \item \textbf{User} \\
-        \texttt{user(username, username, email, password, user\_type, department, contact\_number)} \\
+        \texttt{user(username, username, email, password, user\_type,contact\_number)} \\
         \textbf{Primary Key:} username \\
 
     \item \textbf{Student} \\
-        \texttt{student(student\_id, enrollment\_date,department, username)} \\
+        \texttt{student(student\_id, enrollment\_date, username)} \\
         \textbf{Primary Key:} student\_id \\
         \textbf{Foreign Key:} username $\rightarrow$ user(username)
     
     \item \textbf{Teacher} \\
-        \texttt{teacher(teacher\_id, employment\_date, department, username)} \\
+        \texttt{teacher(teacher\_id, employment\_date, username)} \\
         \textbf{Primary Key:} teacher\_id \\
         \textbf{Foreign Keys:} \\
         \hspace*{1cm} username $\rightarrow$ user(username)
-        
+    
+    \item \textbf{Venue} \\
+        \texttt{Venue(venue\_id, venue\_name)} \\
+        \textbf{Primary Key:} venue\_id
+    
+
     \item \textbf{Location} \\
-        \texttt{location(location\_id, address, description is\_available)} \\
+        \texttt{location(location\_id, location\_name)} \\
         \textbf{Primary Key:} location\_id
         
     \item \textbf{Event\_Category} \\
@@ -34,11 +39,11 @@ The relational schema defines how each table (relation) is structured, specifyin
         \textbf{Primary Key:} category\_id
         
     \item \textbf{Event} \\
-        \texttt{event(event\_id, event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, currently\_registered, category\_id, location\_id)} \\
+        \texttt{event(event\_id, event\_name, description, event\_date, start\_time, end\_time, status, max\_attendees, category\_id, venue\_id)} \\
         \textbf{Primary Key:} event\_id \\
         \textbf{Foreign Keys:} \\
         \hspace*{1cm} category\_id $\rightarrow$ event\_category(category\_id) \\
-        \hspace*{1cm} location\_id $\rightarrow$ location(location\_id)
+        \hspace*{1cm} venue\_id $\rightarrow$ Venue(venue\_id)
         
     \item \textbf{Registers} \\
         \texttt{registers(username, event\_id, registration\_date)} \\

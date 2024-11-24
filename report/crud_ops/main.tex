@@ -1,0 +1,62 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+% Set the page layout
+\geometry{a4paper, margin=1in}
+
+% Define custom title formatting
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+% Title and author information
+\title{CRUD Operations of \\ CU Campus Event Management System}
+\author{Your Name \\ University Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+Provide an overview of the project and its purpose. Mention the goals and the technologies used, such as React, Node.js, and MySQL.
+
+\section{Database Design}
+\subsection{Schema Overview}
+Describe the main tables and their relationships, including `Users`, `Events`, `Categories`, `Locations`, and so on.
+
+\subsection{Entity-Relationship Diagram}
+Include or reference an ER diagram showing the database design.
+
+\section{CRUD Operations}
+\subsection{Create}
+Explain how users can create records, such as registering new users or creating events. Provide SQL examples.
+
+\subsection{Read}
+Discuss how users or administrators can retrieve data, such as viewing a list of events or participant details. Include SQL query examples.
+
+\subsection{Update}
+Describe how updates are handled, like modifying event details or user information. Include examples of SQL update statements.
+
+\subsection{Delete}
+Explain how deletions are managed, for instance, removing canceled events or deregistering users. Provide SQL examples.
+
+\section{Frontend Integration}
+Explain how the CRUD operations are integrated into the React frontend.
+
+\subsection{Form Design}
+Describe the forms used for input, such as event creation or user registration.
+
+\subsection{API Endpoints}
+Mention the Node.js endpoints for handling CRUD operations.
+
+\section{Conclusion}
+Summarize the system's functionality and future improvement plans.
+
+\end{document}
