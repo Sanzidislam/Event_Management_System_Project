@@ -1,6 +1,9 @@
 import React from "react";
+import { handleRegisterClick } from "../../services/eventService";
 
-const EventCard = ({ event, venues, onShowDetails, onEdit, onDelete }) => {
+
+
+const EventCard = ({ event, venues, onShowDetails }) => {
   const venue = venues.find((v) => v.venue_id === event.venue_id);
 
   return (
@@ -22,16 +25,10 @@ const EventCard = ({ event, venues, onShowDetails, onEdit, onDelete }) => {
             Show Details
           </button>
           <button
-            className="btn btn-warning me-2"
-            onClick={() => onEdit(event)}
+            className="btn btn-success"
+            onClick={() => handleRegisterClick(event.event_id)}
           >
-            Edit
-          </button>
-          <button
-            className="btn btn-danger"
-            onClick={() => onDelete(event.event_id)}
-          >
-            Delete
+            Register
           </button>
         </div>
       </div>

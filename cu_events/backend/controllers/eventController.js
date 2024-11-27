@@ -75,7 +75,8 @@ const deleteEvent = (req, res) => {
 };
 
 const getSpecificEvent = (req,res) => {
-  const event_id = req.params;
+  const event_id = req.params.event_id;
+  // console.log(event_id);
   db.query(
     "select *  FROM event WHERE event_id = ?",
     [event_id],
@@ -86,4 +87,38 @@ const getSpecificEvent = (req,res) => {
   );
 }
 
-module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser};
+const registerEvent = (req,res)=>{
+  const event_id = req.params.event_id;
+  const user_id = req.user.user_id 
+  sql = "insert into registers (user_id,event_id) values(?,?)";
+  db.query(sql,[user_id,event_id],
+    (err,results)=>{
+      if(err) return res.status(500).send("Failed to register event");
+      res.status(200).send("Event registered successfully");
+    }
+  )
+};
+const unregisterEvent = (req,res)=>{
+  const event_id = req.params.event_id;
+  const user_id = req.params.event_id;
+  if (!event_id || !user_id) {
+    return res.status(400).send("Invalid event or user ID");
+  }
+
+  const sql = "DELETE FROM registers WHERE user_id = ? AND event_id = ?";
+
+  db.query(sql, [user_id, event_id], (err, results) => {
+    if (err) {
+      return res.status(500).send("Failed to unregister from event");
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).send("No registration found for this event");
+    }
+
+    res.status(200).send("Event unregistered successfully");
+  });
+
+};
+
+module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unregisterEvent};

@@ -54,8 +54,11 @@ const loginUser = (req, res) => {
   });
 };
 
+
+
 const getProfile = (req, res) => {
-    const user_id = req.user.user_id;
+    // serUser_id();
+    const user_id = req.user.user_id 
     db.query("SELECT * FROM user WHERE user_id = ?", [user_id], (err, results) => {
       if (err) return res.status(500).send("Error fetching profile");
       if (results.length === 0) return res.status(404).send("User not found");

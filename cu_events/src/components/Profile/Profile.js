@@ -5,13 +5,13 @@ import ProfileInfo from "./ProfileInfo";
 import CreatedEvents from "./CreatedEvents";
 import RegisteredEvents from "./RegisteredEvents";
 import ToggleButtons from "./ToggleButtons";
-import EventCard from "../showEvents/EventCard";
+import EventCard from "./EventCard";
 
 import { fetchEvents, deleteEvent } from "../../services/eventService";
 import { fetchVenues } from "../../services/venueService";
 // import EventCard from "./EventCard";
 import EventDetailsModal from "../showEvents/EventDetailsModal";
-import EditEventModal from "../showEvents/EditEventModal";
+import EditEventModal from "./EditEventModal";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -53,7 +53,7 @@ loadVenues();
 
   const fetchCreatedEvents = (userId) => {
     axios
-      .get(`http://localhost:5000/events/${userId}`)
+      .get(`http://localhost:5000/events/user/${userId}`)
       .then((response) => setEvents(response.data))
       .catch((error) => console.error("Error fetching created events:", error));
   };
@@ -157,7 +157,9 @@ loadVenues();
       )}
     </div>
       ) : (
-        <RegisteredEvents events={registeredEvents} />
+        <RegisteredEvents 
+        events={registeredEvents}
+        venues={venues}/>
       )}
     </div>
   );

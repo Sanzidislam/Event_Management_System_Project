@@ -34,17 +34,6 @@ const ShowEvents = () => {
     }
   };
 
-  const handleDelete = async (eventId) => {
-    if (window.confirm("Are you sure you want to delete this event?")) {
-      try {
-        await deleteEvent(eventId);
-        alert("Event deleted successfully!");
-        loadEvents();
-      } catch (error) {
-        alert("Failed to delete event.");
-      }
-    }
-  };
 
   return (
     <div className="container mt-5">
@@ -59,8 +48,6 @@ const ShowEvents = () => {
               event={event}
               venues={venues}
               onShowDetails={setSelectedEvent}
-              onEdit={setEditEvent}
-              onDelete={handleDelete}
             />
           ))}
         </div>
@@ -74,13 +61,6 @@ const ShowEvents = () => {
         />
       )}
 
-      {editEvent && (
-        <EditEventModal
-          event={editEvent}
-          onClose={() => setEditEvent(null)}
-          onSave={loadEvents}
-        />
-      )}
     </div>
   );
 };
