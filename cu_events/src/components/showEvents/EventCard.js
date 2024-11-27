@@ -1,10 +1,30 @@
-import React from "react";
-import { handleRegisterClick } from "../../services/eventService";
-
-
+import React, { useEffect, useState } from "react";
+import {
+  handleRegisterClick,
+  handleUnregisterClick,
+  checkRegistrationStatus,
+} from "../../services/eventService";
 
 const EventCard = ({ event, venues, onShowDetails }) => {
+  const [isRegistered, setIsRegistered] = useState(false);
   const venue = venues.find((v) => v.venue_id === event.venue_id);
+
+  useEffect(() => {
+    const fetchRegistrationStatus = async () => {
+      const status = await checkRegistrationStatus(event.event_id);
+      setIsRegistered(status);
+    };
+    fetchRegistrationStatus();
+  }, [event.event_id]);
+
+  const handleToggleRegistration = async () => {
+    if (isRegistered) {
+      await handleUnregisterClick(event.event_id);
+    } else {
+      await handleRegisterClick(event.event_id);
+    }
+    setIsRegistered(!isRegistered);
+  };
 
   return (
     <div className="col-md-4 mb-4">
@@ -25,10 +45,10 @@ const EventCard = ({ event, venues, onShowDetails }) => {
             Show Details
           </button>
           <button
-            className="btn btn-success"
-            onClick={() => handleRegisterClick(event.event_id)}
+            className={`btn ${isRegistered ? "btn-danger" : "btn-success"}`}
+            onClick={handleToggleRegistration}
           >
-            Register
+            {isRegistered ? "Unregister" : "Register"}
           </button>
         </div>
       </div>

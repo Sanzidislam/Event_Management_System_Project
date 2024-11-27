@@ -10,7 +10,8 @@ const {
   getCreatedEvents,
   getEventsRegisteredByUser,
   registerEvent,
-  unRegisterEvent
+  unRegisterEvent,
+  checkRegistration
 } = require("../controllers/eventController");
 
 const router = express.Router();
@@ -24,6 +25,7 @@ router.post("/create",authenticate, createEvent); // Create a new event
 router.put("/update/:event_id", updateEvent); // Update an event by ID
 router.delete("/delete/:event_id",deleteEvent); // Delete an event by ID
 router.post("/register/:event_id",authenticate,registerEvent);
-// router.delete("/unregister/:event_id/:user_id",unRegisterEvent)
+router.delete("/unregister/:event_id", authenticate, unRegisterEvent);
+router.get("/check-registration/:event_id", authenticate, checkRegistration);
 
 module.exports = router;

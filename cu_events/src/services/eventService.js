@@ -99,5 +99,43 @@ export const handleRegisterClick = async (event_id) => {
   }
 };
 
+export const handleUnregisterClick = async (event_id) => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to unregister from the event.");
+      return;
+    }
+
+    const response = await axios.delete(
+      `http://localhost:5000/events/unregister/${event_id}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    alert(response.data || "Event unregistered successfully!");
+  } catch (error) {
+    console.error("Error unregistering from event:", error);
+    alert("Failed to unregister. Please try again later.");
+  }
+};
+
+export const checkRegistrationStatus = async (event_id) => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return false;
+
+    const response = await axios.get(
+      `http://localhost:5000/events/check-registration/${event_id}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data.registered;
+  } catch (error) {
+    console.error("Error checking registration status:", error);
+    return false;
+  }
+};
 
 

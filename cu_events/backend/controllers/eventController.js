@@ -90,7 +90,7 @@ const getSpecificEvent = (req,res) => {
 const registerEvent = (req,res)=>{
   const event_id = req.params.event_id;
   const user_id = req.user.user_id 
-  sql = "insert into registers (user_id,event_id) values(?,?)";
+  sql = "insert into registers (user_id,event_id,registration_date) values(?,?,current_date())";
   db.query(sql,[user_id,event_id],
     (err,results)=>{
       if(err) return res.status(500).send("Failed to register event");
@@ -98,27 +98,49 @@ const registerEvent = (req,res)=>{
     }
   )
 };
-const unregisterEvent = (req,res)=>{
-  const event_id = req.params.event_id;
-  const user_id = req.params.event_id;
-  if (!event_id || !user_id) {
-    return res.status(400).send("Invalid event or user ID");
+
+const unRegisterEvent = (req, res) => {
+  const { event_id } = req.params; // Extract the event ID from the route
+  const user_id = req.user?.user_id; // Extract user_id from the authentication middleware
+
+  if (!user_id) {
+    return res.status(401).send("Unauthorized"); // Ensure the user is authenticated
   }
 
+  // SQL query to delete the registration record for the user and event
   const sql = "DELETE FROM registers WHERE user_id = ? AND event_id = ?";
-
   db.query(sql, [user_id, event_id], (err, results) => {
     if (err) {
-      return res.status(500).send("Failed to unregister from event");
+      console.error("Database Error:", err);
+      return res.status(500).send("Failed to unregister from the event");
     }
 
     if (results.affectedRows === 0) {
-      return res.status(404).send("No registration found for this event");
+      return res.status(404).send("No registration found to delete");
     }
 
-    res.status(200).send("Event unregistered successfully");
+    res.status(200).send("Successfully unregistered from the event");
   });
-
 };
 
-module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unregisterEvent};
+const checkRegistration = (req, res) => {
+  const { event_id } = req.params; // Extract the event ID from the route
+  const user_id = req.user?.user_id; // Extract user_id from the authentication middleware
+
+  if (!user_id) {
+    return res.status(401).send("Unauthorized"); // Ensure the user is authenticated
+  }
+
+  // SQL query to check if the user is registered for the event
+  const sql = "SELECT * FROM registers WHERE user_id = ? AND event_id = ?";
+  db.query(sql, [user_id, event_id], (err, results) => {
+    if (err) {
+      console.error("Database Error:", err);
+      return res.status(500).send("Failed to check registration status");
+    }
+
+    // If results.length > 0, the user is registered; otherwise, they are not
+    res.status(200).json({ registered: results.length > 0 });
+  });
+};
+module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unRegisterEvent,checkRegistration};
