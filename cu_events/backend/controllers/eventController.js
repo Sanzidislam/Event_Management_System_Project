@@ -1,7 +1,15 @@
 const db = require("../config/db");
 
 const getAllEvents = (req, res) => {
-  db.query("SELECT * FROM event", (err, results) => {
+  db.query("select * from event e join user u on u.user_id = e.user_id join venue v on v.venue_id = e.venue_id join location l on l.location_id= v.venue_id;", (err, results) => {
+    if (err) return res.status(500).send("Error retrieving events");
+    res.status(200).json(results);
+  });
+};
+
+const getAvailableEventsForUser = (req, res) => {
+  const user_id = req.user.user_id 
+  db.query("select e.event_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees, e.venue_id,v.venue_name,l.location_id,l.location_name,u.user_id,u.name  ,ec.category_id from event e join user u on u.user_id = e.user_id join venue v on v.venue_id = e.venue_id join location l on l.location_id= v.location_id join event_category ec on e.category_id = ec.category_id where e.user_id != 1;",[user_id], (err, results) => {
     if (err) return res.status(500).send("Error retrieving events");
     res.status(200).json(results);
   });
@@ -11,7 +19,7 @@ const getAllEvents = (req, res) => {
 const getEventsOfUser = (req, res) => {
   const user_id = req.params;
   // console.log(user_id.user_id);
-  db.query("select * from event where user_id = ?",[user_id.user_id],
+  db.query("select e.event_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees,e.venue_id,u.user_id,u.name from event e join user u on u.user_id= e.user_id where e.user_id = ? order by e.event_date desc",[user_id.user_id],
     (err,results)=>{
     if (err) return res.status(500).send("Error retrieving events");
     res.status(200).json(results);
@@ -143,4 +151,21 @@ const checkRegistration = (req, res) => {
     res.status(200).json({ registered: results.length > 0 });
   });
 };
-module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unRegisterEvent,checkRegistration};
+
+
+const getRegistrationCount = (req, res) => {
+  const event_id = req.params.event_id;
+
+  const sql = "SELECT COUNT(*) AS currentlyRegistered FROM registers WHERE event_id = ?";
+  db.query(sql, [event_id], (err, results) => {
+    if (err) return res.status(500).send("Error fetching registration count");
+
+    if (results.length > 0) {
+      res.status(200).json({ count: results[0].currentlyRegistered });
+    } else {
+      res.status(404).send("Event not found");
+    }
+  })
+};
+
+module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unRegisterEvent,checkRegistration,getAvailableEventsForUser,getRegistrationCount};

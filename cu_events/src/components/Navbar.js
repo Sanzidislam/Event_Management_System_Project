@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.setItem('token','');
   };
 
   return (

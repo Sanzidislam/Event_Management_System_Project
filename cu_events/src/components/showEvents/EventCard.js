@@ -3,11 +3,14 @@ import {
   handleRegisterClick,
   handleUnregisterClick,
   checkRegistrationStatus,
+  getRegistrationCount
 } from "../../services/eventService";
 
 const EventCard = ({ event, venues, onShowDetails }) => {
   const [isRegistered, setIsRegistered] = useState(false);
   const venue = venues.find((v) => v.venue_id === event.venue_id);
+  const [registrationCount, setRegistrationCount] = useState(0);
+  const [isFull, setIsFull] = useState(false);
 
   useEffect(() => {
     const fetchRegistrationStatus = async () => {
@@ -15,6 +18,7 @@ const EventCard = ({ event, venues, onShowDetails }) => {
       setIsRegistered(status);
     };
     fetchRegistrationStatus();
+    fetchRegistrationCount();
   }, [event.event_id]);
 
   const handleToggleRegistration = async () => {
@@ -26,17 +30,36 @@ const EventCard = ({ event, venues, onShowDetails }) => {
     setIsRegistered(!isRegistered);
   };
 
+  const fetchRegistrationCount = async () => {
+    try {
+      const data = await getRegistrationCount(event.event_id);
+      console.log(data.count);
+      setRegistrationCount(data.count);
+      setIsFull(data.count >= event.max_attendees); // Check if registration is full
+    } catch (error) {
+      console.error("Error fetching registration count:", error);
+    }
+  };
   return (
     <div className="col-md-4 mb-4">
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{event.event_name}</h5>
+          <p>
+            <strong></strong> {event.description.substr(0,30)+'...'}
+          </p>
           <p className="card-text">
             <strong>Date:</strong>{" "}
             {new Date(event.event_date).toLocaleDateString()}
           </p>
           <p>
             <strong>Venue:</strong> {venue ? venue.venue_name : "Unknown"}
+          </p>
+          <p>
+            <strong>Location:</strong> {venue ? venue.location_name : "Unknown"}
+          </p>
+          <p>
+            <strong>Registered:</strong> {registrationCount} / {event.max_attendees}
           </p>
           <button
             className="btn btn-info me-2"
@@ -45,11 +68,19 @@ const EventCard = ({ event, venues, onShowDetails }) => {
             Show Details
           </button>
           <button
-            className={`btn ${isRegistered ? "btn-danger" : "btn-success"}`}
-            onClick={handleToggleRegistration}
-          >
-            {isRegistered ? "Unregister" : "Register"}
-          </button>
+  className={`btn ${isRegistered ? "btn-danger" : "btn-success"}`}
+  disabled={isFull} // Disable if the event is full
+  onClick={() => {
+    if (!isFull) {
+      handleToggleRegistration(); // Toggle between Register and Unregister
+    } else {
+      alert("Event is full!");
+    }
+  }}
+>
+  {isFull ? "Full" : isRegistered ? "Unregister" : "Register"}
+</button>
+
         </div>
       </div>
     </div>

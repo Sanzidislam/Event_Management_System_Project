@@ -5,8 +5,8 @@ import { getVenues } from '../../services/venueService';
 import { getCategories } from '../../services/categoryService';
 import { createEvent } from '../../services/eventService';
 import EventForm from './EventForm';
-import LocationSelect from './LocationSelect';
 import VenueSelect from './VenueSelect';
+import LocationSelect from './LocationSelect';
 import CategorySelect from './CategorySelect';
 
 const CreateEvent = () => {
@@ -23,8 +23,8 @@ const CreateEvent = () => {
     user_id: 1, // Temporary user ID
   });
 
-  const [locations, setLocations] = useState([]);
   const [venues, setVenues] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 

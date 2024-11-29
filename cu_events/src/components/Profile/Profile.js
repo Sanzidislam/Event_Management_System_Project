@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileInfo from "./ProfileInfo";
-import CreatedEvents from "./CreatedEvents";
-import RegisteredEvents from "./RegisteredEvents";
+
 import ToggleButtons from "./ToggleButtons";
 import EventCard from "./EventCard";
-
+import EventCardOfRegister from "../showEvents/EventCard";
 import { fetchEvents, deleteEvent } from "../../services/eventService";
 import { fetchVenues } from "../../services/venueService";
-// import EventCard from "./EventCard";
+
 import EventDetailsModal from "../showEvents/EventDetailsModal";
 import EditEventModal from "./EditEventModal";
 
@@ -157,9 +156,23 @@ loadVenues();
       )}
     </div>
       ) : (
-        <RegisteredEvents 
-        events={registeredEvents}
-        venues={venues}/>
+        <div className="row">
+          {registeredEvents.map((event) => (
+            <EventCardOfRegister
+              key={event.event_id}
+              event={event}
+              venues={venues}
+              onShowDetails={setSelectedEvent}
+            />
+          ))}
+        </div>
+      )}
+      {selectedEvent && (
+        <EventDetailsModal
+          event={selectedEvent}
+          venues={venues}
+          onClose={() => setSelectedEvent(null)}
+        />
       )}
     </div>
   );

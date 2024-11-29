@@ -1,7 +1,8 @@
 import React from "react";
-import EventCard from "./EventCard";
+import EventCard from "../showEvents/EventCard";
 
 const RegisteredEvents = ({ events, venues }) => (
+  
   <div className="mt-5">
     <h2 className="text-center text-info">Events You Registered For</h2>
     {events.length > 0 ? (

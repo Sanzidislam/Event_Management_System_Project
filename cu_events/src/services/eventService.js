@@ -4,7 +4,12 @@ const API_BASE_URL = "http://localhost:5000";
 
 export const fetchEvents = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/events`);
+    const token = localStorage.getItem('token');
+    const response = await axios.get(`${API_BASE_URL}/events/available`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching events:", error);
@@ -136,6 +141,12 @@ export const checkRegistrationStatus = async (event_id) => {
     console.error("Error checking registration status:", error);
     return false;
   }
+};
+
+
+export const getRegistrationCount = async (event_id) => {
+  const response = await axios.get(`http://localhost:5000/events/registration-count/${event_id}`);
+  return response.data;
 };
 
 

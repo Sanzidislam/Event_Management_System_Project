@@ -8,6 +8,7 @@ import CreateEvent from './components/CreateEvent/CreateEvent';
 import RegisterEvent from './components/RegisterEvent';
 import Navbar from './components/Navbar';
 
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -15,10 +16,13 @@ import LoginPage from './components/Login/LoginPage';
 import Profile from './components/Profile/Profile';
 
 import ShowEvents from './components/showEvents/ShowEvents';
+import Footer from './components/footer';
+
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  return (
-    <Router>
+  return (<div>
+      <Router>
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Homepage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
@@ -31,7 +35,10 @@ const App = () => {
         <Route path='/Profile' element = {<Profile/>}/>
         <Route path='show-the-events' element = {<ShowEvents />}/>
       </Routes>
+        {/* <Footer/> */}
     </Router>
+    </div>
+
   );
 };
 

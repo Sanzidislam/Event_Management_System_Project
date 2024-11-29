@@ -18,6 +18,7 @@ const EventDetailsModal = ({ event, venues, onClose }) => {
             <p><strong>End Time:</strong> {event.end_time}</p>
             <p><strong>Venue:</strong> {venue ? venue.venue_name : "Unknown"}</p>
             <p><strong>Location:</strong> {venue ? venue.location_name : "Unknown"}</p>
+            <p><strong>Event Creator:</strong> {event ? event.name : "Unknown"}</p>
           </div>
           <div className="modal-footer">
             <button className="btn btn-secondary" onClick={onClose}>

@@ -2,7 +2,7 @@ import React from "react";
 
 const EventCard = ({ event, venues, onShowDetails, onEdit, onDelete }) => {
   const venue = venues.find((v) => v.venue_id === event.venue_id);
-
+  // console.log(event);
   return (
     <div className="col-md-4 mb-4">
       <div className="card">
