@@ -80,7 +80,7 @@ const Profile = () => {
       {/* Profile Card */}
       <div className="card mx-auto shadow" style={{ maxWidth: "500px" }}>
         <div className="card-body">
-          <h1 className="card-title text-center text-primary mb-4">Profile</h1>
+          <h1 className="card-title text-center text-warning mb-4">Profile</h1>
           <p className="card-text">
             <strong>User ID:</strong> {userProfile.user_id}
           </p>

@@ -8,7 +8,7 @@ import EventForm from './EventForm';
 import VenueSelect from './VenueSelect';
 import LocationSelect from './LocationSelect';
 import CategorySelect from './CategorySelect';
-
+import axios from 'axios';
 const CreateEvent = () => {
   const [eventData, setEventData] = useState({
     event_name: '',
@@ -27,7 +27,7 @@ const CreateEvent = () => {
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-
+  const [isVenueAvailable, setIsVenueAvailable] = useState(true);
   useEffect(() => {
     getLocations().then(setLocations).catch(console.error);
     getCategories().then(setCategories).catch(console.error);
@@ -40,6 +40,11 @@ const CreateEvent = () => {
       setVenues([]);
     }
   }, [eventData.location_id]);
+  useEffect(() => {
+    if (eventData.venue_id && eventData.event_date) {
+      checkVenueAvailability(eventData.venue_id, eventData.event_date);
+    }
+  }, [eventData.venue_id, eventData.event_date]);
 
   const handleChange = (e) => setEventData({ ...eventData, [e.target.name]: e.target.value });
   const handleSubmit = async (e) => {
@@ -52,11 +57,24 @@ const CreateEvent = () => {
       alert('Event creation failed!');
     }
   };
+    const checkVenueAvailability = async (venueId, eventDate) => {
+    try {
+      const response = await axios.post("http://localhost:5000/check-venue", {
+        venue_id: venueId,
+        event_date: eventDate,
+      });
+  
+      setIsVenueAvailable(response.data.isAvailable);
+    } catch (error) {
+      console.error("Error checking venue availability:", error);
+      setIsVenueAvailable(false);
+    }
+  };
 
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Create Event</h2>
-      <EventForm eventData={eventData} handleChange={handleChange} handleSubmit={handleSubmit}>
+      <EventForm eventData={eventData} handleChange={handleChange} handleSubmit={handleSubmit} isVenueAvailable={isVenueAvailable}>
         <LocationSelect
           locations={locations}
           handleChange={handleChange}
@@ -71,6 +89,7 @@ const CreateEvent = () => {
           categories={categories}
           handleChange={handleChange}
           selectedCategory={eventData.category_id}
+
         />
       </EventForm>
     </div>

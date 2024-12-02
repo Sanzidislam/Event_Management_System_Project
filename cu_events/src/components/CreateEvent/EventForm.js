@@ -1,8 +1,9 @@
 import React from 'react';
+import '../../all-css/EventForm.css'; // Import the CSS file
 
-const EventForm = ({ eventData, handleChange, handleSubmit, children }) => {
+const EventForm = ({ eventData, handleChange, handleSubmit, children,isVenueAvailable }) => {
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm">
+    <form onSubmit={handleSubmit} className="event-form">
       <div className="mb-3">
         <label htmlFor="event_name" className="form-label">Event Name</label>
         <input
@@ -84,9 +85,14 @@ const EventForm = ({ eventData, handleChange, handleSubmit, children }) => {
         />
       </div>
 
+      {/* Slot for additional inputs */}
       {children}
+          {/* Show Availability Status */}
+    {!isVenueAvailable && <p className="error">Venue is already booked on this date.</p>}
 
-      <button type="submit" className="btn btn-primary btn-lg w-100">Create Event</button>
+      <div className="d-grid">
+        <button type="submit" className="btn btn-primary">Create Event</button>
+      </div>
     </form>
   );
 };

@@ -5,13 +5,13 @@ import {
   checkRegistrationStatus,
   getRegistrationCount
 } from "../../services/eventService";
-
+import { useNavigate } from "react-router-dom";
 const EventCard = ({ event, venues, onShowDetails }) => {
   const [isRegistered, setIsRegistered] = useState(false);
   const venue = venues.find((v) => v.venue_id === event.venue_id);
   const [registrationCount, setRegistrationCount] = useState(0);
   const [isFull, setIsFull] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchRegistrationStatus = async () => {
       const status = await checkRegistrationStatus(event.event_id);

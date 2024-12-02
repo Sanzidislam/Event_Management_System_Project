@@ -8,8 +8,9 @@ const getAllEvents = (req, res) => {
 };
 
 const getAvailableEventsForUser = (req, res) => {
-  const user_id = req.user.user_id 
-  db.query("select e.event_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees, e.venue_id,v.venue_name,l.location_id,l.location_name,u.user_id,u.name  ,ec.category_id from event e join user u on u.user_id = e.user_id join venue v on v.venue_id = e.venue_id join location l on l.location_id= v.location_id join event_category ec on e.category_id = ec.category_id where e.user_id != 1;",[user_id], (err, results) => {
+  const user_id = req.user.user_id;
+  // console.log(user_id);
+  db.query("select e.event_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees, e.venue_id,v.venue_name,l.location_id,l.location_name,u.user_id,u.name  ,ec.category_id from event e join user u on u.user_id = e.user_id join venue v on v.venue_id = e.venue_id join location l on l.location_id= v.location_id join event_category ec on e.category_id = ec.category_id where e.user_id != ?;",[user_id], (err, results) => {
     if (err) return res.status(500).send("Error retrieving events");
     res.status(200).json(results);
   });
@@ -49,6 +50,26 @@ const createEvent = (req, res) => {
       res.status(201).send("Event created successfully!");
     }
   );
+};
+
+const checkVanue =  async (req, res) => {
+  const { venue_id, event_date } = req.body;
+
+  try {
+    const conflictingEvent = await db.query(
+      `SELECT * FROM events WHERE venue_id = ? AND event_date = ?`,
+      [venue_id, event_date]
+    );
+
+    if (conflictingEvent.length > 0) {
+      return res.json({ isAvailable: false });
+    }
+
+    res.json({ isAvailable: true });
+  } catch (error) {
+    console.error("Error checking venue availability:", error);
+    res.status(500).json({ message: "An error occurred while checking venue availability." });
+  }
 };
 
 // Update an event by ID
@@ -168,4 +189,4 @@ const getRegistrationCount = (req, res) => {
   })
 };
 
-module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unRegisterEvent,checkRegistration,getAvailableEventsForUser,getRegistrationCount};
+module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unRegisterEvent,checkRegistration,getAvailableEventsForUser,getRegistrationCount,checkVanue};

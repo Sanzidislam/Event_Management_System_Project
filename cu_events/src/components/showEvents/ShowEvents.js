@@ -7,6 +7,8 @@ import LocationSelect from "../CreateEvent/LocationSelect";
 import CategorySelect from "../CreateEvent/CategorySelect";
 import { getLocations } from "../../services/locationService";
 import { getCategories } from "../../services/categoryService";
+import "../../all-css/ShowEvents.css";
+import { Link } from "react-router-dom";
 
 const ShowEvents = () => {
   const [events, setEvents] = useState([]);
@@ -17,6 +19,7 @@ const ShowEvents = () => {
   const [categories, setCategories] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     loadEvents();
@@ -27,7 +30,7 @@ const ShowEvents = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [selectedLocation, selectedCategory, events]);
+  }, [selectedLocation, selectedCategory, selectedDate, events]);
 
   const loadEvents = async () => {
     try {
@@ -67,57 +70,81 @@ const ShowEvents = () => {
 
   const applyFilters = () => {
     let filtered = events;
+
     if (selectedLocation) {
       filtered = filtered.filter((event) => event.location_id == selectedLocation);
     }
 
     if (selectedCategory) {
-
       filtered = filtered.filter((event) => event.category_id == selectedCategory);
+    }
+
+    if (selectedDate) {
+      filtered = filtered.filter((event) => {
+        const eventDate = new Date(event.event_date).toLocaleDateString();
+        return eventDate === new Date(selectedDate).toLocaleDateString();
+      });
     }
 
     setFilteredEvents(filtered);
   };
 
-  return (
-    <div className="container mt-5">
-      <h1 className="text-center mb-4">Available Events</h1>
+  const resetFilters = () => {
+    setSelectedLocation("");
+    setSelectedCategory("");
+    setSelectedDate("");
+  };
 
-      {/* Filters */}
-      <div className="d-flex justify-content-between mb-4">
-        <div className="me-3">
-          <LocationSelect
-            locations={locations}
-            handleChange={(e) => setSelectedLocation(e.target.value)}
-            selectedLocation={selectedLocation}
+  return (
+    <div className="show-events-container">
+      <div className="sidebar">
+        {/* <button className="btn btn-primary mb-3">+ Create Event</button> */}
+        <Link to= "/create-event" className="btn btn-primary mb-3">+ Create Event</Link>
+        <h4>Filters</h4>
+        <LocationSelect
+          locations={locations}
+          handleChange={(e) => setSelectedLocation(e.target.value)}
+          selectedLocation={selectedLocation}
+        />
+        <CategorySelect
+          categories={categories}
+          handleChange={(e) => setSelectedCategory(e.target.value)}
+          selectedCategory={selectedCategory}
+        />
+        <div className="form-group mt-3">
+          <label htmlFor="datePicker">Select Date</label>
+          <input
+            type="date"
+            id="datePicker"
+            className="form-control"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
           />
         </div>
-        <div>
-          <CategorySelect
-            categories={categories}
-            handleChange={(e) => setSelectedCategory(e.target.value)}
-            selectedCategory={selectedCategory}
-          />
-        </div>
+        <button className="btn btn-secondary mt-3" onClick={resetFilters}>
+          Reset Filters
+        </button>
       </div>
 
-      {/* Event Cards */}
-      {filteredEvents.length === 0 ? (
-        <h2 className="text-center mt-5">No events match the selected filters.</h2>
-      ) : (
-        <div className="row">
-          {filteredEvents.map((event) => (
-            <EventCard
-              key={event.event_id}
-              event={event}
-              venues={venues}
-              onShowDetails={setSelectedEvent}
-            />
-          ))}
-        </div>
-      )}
+      <div className="events-section">
+        {filteredEvents.length === 0 ? (
+          <div className="no-events">
+            <p>No events match the selected filters.</p>
+          </div>
+        ) : (
+          <div className="event-cards">
+            {filteredEvents.map((event) => (
+              <EventCard
+                key={event.event_id}
+                event={event}
+                venues={venues}
+                onShowDetails={setSelectedEvent}
+              />
+            ))}
+          </div>
+        )}
+      </div>
 
-      {/* Event Details Modal */}
       {selectedEvent && (
         <EventDetailsModal
           event={selectedEvent}

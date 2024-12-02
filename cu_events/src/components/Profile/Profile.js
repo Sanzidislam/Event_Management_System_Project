@@ -11,7 +11,7 @@ import { fetchVenues } from "../../services/venueService";
 
 import EventDetailsModal from "../showEvents/EventDetailsModal";
 import EditEventModal from "./EditEventModal";
-
+import "../../all-css/Profile.css"
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [events, setEvents] = useState([]);

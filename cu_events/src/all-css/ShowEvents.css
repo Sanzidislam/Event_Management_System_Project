@@ -1,0 +1,44 @@
+.show-events-container {
+    display: flex;
+    background-color: #fff7e6;
+    padding: 2rem;
+  }
+  
+  .sidebar {
+    width: 25%;
+    padding: 1rem;
+    background: #ffd59e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 2rem;
+  }
+  
+  .sidebar h4 {
+    color: #bf5f00;
+    margin-bottom: 1rem;
+  }
+  
+  .sidebar .btn {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .events-section {
+    flex-grow: 1;
+  }
+  
+  .event-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    /* display: grid; */
+    /* grid-template-columns: repeat(3, 1fr);  */
+    /* gap: 20px;  */
+  }
+  
+  .no-events {
+    text-align: center;
+    color: #bf5f00;
+    font-size: 1.2rem;
+  }
+  

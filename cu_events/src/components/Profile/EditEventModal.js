@@ -1,102 +1,5 @@
-// import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { getLocations } from '../../services/locationService';
-// import { getVenues } from '../../services/venueService';
-// import { getCategories } from '../../services/categoryService';
-// import { createEvent } from '../../services/eventService';
-// import EventForm from '../CreateEvent/EventForm';
-// import LocationSelect from '../CreateEvent/LocationSelect';
-// import VenueSelect from '../CreateEvent/VenueSelect';
-// import CategorySelect from '../CreateEvent/CategorySelect';
-// import { updateEvent } from "../../services/eventService";
-// const EditEventModal = ({ event, onClose, onSave }) => {
-//   // const [eventData, setEventData] = useState({
-//   //   event_name: '',
-//   //   description: '',
-//   //   event_date: '',
-//   //   start_time: '',
-//   //   end_time: '',
-//   //   max_attendees: '',
-//   //   location_id: '',
-//   //   venue_id: '',
-//   //   category_id: '',
-//   //   user_id: 1, // Temporary user ID
-//   // });
-//   const [eventData, setEventData] = useState({ ...event });
-
-//   const [locations, setLocations] = useState([]);
-//   const [venues, setVenues] = useState([]);
-//   const [categories, setCategories] = useState([]);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     getLocations().then(setLocations).catch(console.error);
-//     getCategories().then(setCategories).catch(console.error);
-//   }, []);
-
-//   useEffect(() => {
-//     if (eventData.location_id) {
-//       getVenues(eventData.location_id).then(setVenues).catch(console.error);
-//     } else {
-//       setVenues([]);
-//     }
-//   }, [eventData.location_id]);
-
-//   const handleChange = (e) => setEventData({ ...eventData, [e.target.name]: e.target.value });
-//   // const handleSubmit = async (e) => {
-//   //   e.preventDefault();
-//   //   try {
-//   //     const message = await createEvent(eventData);
-//   //     alert(message);
-//   //     navigate('/');
-//   //   } catch {
-//   //     alert('Event creation failed!');
-//   //   }
-//   // };
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       await updateEvent(event.event_id, eventData);
-//       alert("Event updated successfully!");
-//       onSave();
-//       onClose();
-//     } catch (error) {
-//       alert("Failed to update event.");
-//     }
-//   };
-//   return (
-//     <div className="container mt-5">
-//       <h2 className="text-center mb-4">Create Event</h2>
-//       <EventForm eventData={eventData} handleChange={handleChange} handleSubmit={handleSubmit}>
-//         <LocationSelect
-//           locations={locations}
-//           handleChange={handleChange}
-//           selectedLocation={eventData.location_id}
-//         />
-//         <VenueSelect
-//           venues={venues}
-//           handleChange={handleChange}
-//           selectedVenue={eventData.venue_id}
-//         />
-//         <CategorySelect
-//           categories={categories}
-//           handleChange={handleChange}
-//           selectedCategory={eventData.category_id}
-//         />
-//       </EventForm>
-//     </div>
-//   );
-// };
-// export default EditEventModal;
-
-
-
-
 import React, { useState } from "react";
 import { updateEvent } from "../../services/eventService";
-import { getLocations } from '../../services/locationService';
-import { getVenues } from '../../services/venueService';
-import { getCategories } from '../../services/categoryService';
 const EditEventModal = ({ event, onClose, onSave }) => {
   const [formData, setFormData] = useState({ ...event });
 
@@ -181,8 +84,8 @@ const EditEventModal = ({ event, onClose, onSave }) => {
               </div>
             </div>
             <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={onClose}>Close</button>
-              <button className="btn btn-primary" type="submit">Save Changes</button>
+              <button className="btn " onClick={onClose}>Close</button>
+              <button className="btn " type="submit">Save Changes</button>
             </div>
           </form>
         </div>

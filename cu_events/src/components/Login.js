@@ -21,7 +21,7 @@ const Login = ({ setIsLoggedIn }) => {
       setIsLoggedIn(true);
 
       // Redirect to the profile page
-      navigate("/profile");
+      navigate("/");
     } catch (error) {
       alert("Invalid credentials");
     }
