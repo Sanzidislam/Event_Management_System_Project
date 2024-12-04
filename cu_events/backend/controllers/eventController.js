@@ -189,4 +189,29 @@ const getRegistrationCount = (req, res) => {
   })
 };
 
-module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unRegisterEvent,checkRegistration,getAvailableEventsForUser,getRegistrationCount,checkVanue};
+const registeredUsers = async (req, res) => {
+  const  eventId  = req.params.event_id;
+  // console.log(eventId);
+  const sql = `
+    SELECT u.name, u.email 
+    FROM registers r 
+    JOIN user u ON r.user_id = u.user_id 
+    WHERE r.event_id = ?;
+  `;
+
+  db.query(sql, [eventId], (err, results) => {
+    if (err) {
+      console.error("Error fetching registered users:", err);
+      return res.status(500).send("Internal server error.");
+    }
+
+    if (results.length > 0) {
+      res.status(200).json(results);
+    } else {
+      res.status(201).json({ message: "No users registered for this event." });
+    }
+  });
+};
+
+module.exports = { getAllEvents, createEvent, updateEvent, deleteEvent , getSpecificEvent,getEventsOfUser,getEventsRegisteredByUser,registerEvent,unRegisterEvent,checkRegistration,getAvailableEventsForUser,getRegistrationCount,checkVanue, registeredUsers
+};

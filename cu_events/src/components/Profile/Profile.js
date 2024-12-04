@@ -11,12 +11,16 @@ import { fetchVenues } from "../../services/venueService";
 
 import EventDetailsModal from "../showEvents/EventDetailsModal";
 import EditEventModal from "./EditEventModal";
+import ShowRegisteredUsersModal from "./ShowRegisteredUsersModal";
 import "../../all-css/Profile.css"
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [events, setEvents] = useState([]);
   const [registeredEvents, setRegisteredEvents] = useState([]);
   const [showCreatedEvents, setShowCreatedEvents] = useState(true);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+  const [showRegisteredUsersModal, setShowRegisteredUsersModal] = useState(false);
+  const [registered_users_status, set_registered_users_status] = useState('');
   const navigate = useNavigate();
   ////////
 
@@ -63,6 +67,20 @@ loadVenues();
       .then((response) => setRegisteredEvents(response.data))
       .catch((error) => console.error("Error fetching registered events:", error));
   };
+  const fetchRegisteredUsers = async (eventId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/events/registered_users/${eventId}`);
+      setRegisteredUsers(response.data);
+      set_registered_users_status(response.status);
+      setShowRegisteredUsersModal(true);
+      console.log(response);
+      console.log(eventId);
+    } catch (error) {
+      console.error("Error fetching registered users:", error);
+      alert("Failed to fetch registered users.");
+    }
+  };
+  
 
   const handleEditEvent = (eventId) => {
     
@@ -134,6 +152,7 @@ loadVenues();
               onShowDetails={setSelectedEvent}
               onEdit={setEditEvent}
               onDelete={handleDelete}
+              onShowRegisteredUsers={fetchRegisteredUsers}
             />
           ))}
         </div>
@@ -174,6 +193,15 @@ loadVenues();
           onClose={() => setSelectedEvent(null)}
         />
       )}
+      {showRegisteredUsersModal && (
+  <ShowRegisteredUsersModal
+    users={registeredUsers}
+    onClose={() => setShowRegisteredUsersModal(false)}
+    state = {registered_users_status}
+  />
+ )} 
+
+
     </div>
   );
 };

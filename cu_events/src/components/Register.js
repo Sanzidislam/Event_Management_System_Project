@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-
 const Register = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
