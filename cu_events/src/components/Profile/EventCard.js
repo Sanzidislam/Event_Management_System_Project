@@ -9,7 +9,7 @@ const EventCard = ({ event, venues, onShowDetails, onEdit, onDelete, onShowRegis
   const fetchRegistrationCount = async () => {
     try {
       const data = await getRegistrationCount(event.event_id);
-      console.log(data.count);
+      // console.log(data.count);
       setRegistrationCount(data.count);
       } catch (error) {
       console.error("Error fetching registration count:", error);
@@ -50,6 +50,7 @@ const EventCard = ({ event, venues, onShowDetails, onEdit, onDelete, onShowRegis
           >
             Delete
           </button>
+          
           <button
             className="btn btn-info"
             onClick={() => onShowRegisteredUsers(event.event_id)}

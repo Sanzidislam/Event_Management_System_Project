@@ -84,6 +84,7 @@ const ShowEvents = () => {
         const eventDate = new Date(event.event_date).toLocaleDateString();
         return eventDate === new Date(selectedDate).toLocaleDateString();
       });
+      // console.log(new Date(selectedDate).toLocaleDateString);
     }
 
     setFilteredEvents(filtered);

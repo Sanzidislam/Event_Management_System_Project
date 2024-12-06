@@ -61,7 +61,7 @@ const checkVanue =  async (req, res) => {
       [venue_id, event_date]
     );
 
-    if (conflictingEvent.length > 0) {
+    if (conflictingEvent.length > 0) { 
       return res.json({ isAvailable: false });
     }
 
@@ -193,7 +193,7 @@ const registeredUsers = async (req, res) => {
   const  eventId  = req.params.event_id;
   // console.log(eventId);
   const sql = `
-    SELECT u.name, u.email 
+    SELECT u.name, u.email, u.profile_picture 
     FROM registers r 
     JOIN user u ON r.user_id = u.user_id 
     WHERE r.event_id = ?;

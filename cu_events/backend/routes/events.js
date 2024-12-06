@@ -34,6 +34,7 @@ router.delete("/unregister/:event_id", authenticate, unRegisterEvent);
 router.get("/check-registration/:event_id", authenticate, checkRegistration);
 router.post("/check-venue",checkVanue);
 router.get("/registered_users/:event_id", registeredUsers);
+
 // API to get the current registration count for an event
 router.get("/registration-count/:event_id", getRegistrationCount);
 

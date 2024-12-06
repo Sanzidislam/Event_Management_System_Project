@@ -122,3 +122,43 @@ body {
   color: #666;
   line-height: 1.6;
 }
+
+
+
+
+.popular-locations-section {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #ff6f00; /* Matches the orange theme */
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.location-card {
+  padding: 20px;
+  border: 1px solid #ff7e5f;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.location-card h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.location-card p {
+  font-size: 14px;
+  color: #555;
+}

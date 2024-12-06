@@ -1,10 +1,8 @@
-/* 
-.footer {
-   position:  absolute;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   background-color: black;
-   color: white;
-   text-align: center;
-} */
+footer i {
+   transition: transform 0.2s ease-in-out;
+ }
+ 
+ footer i:hover {
+   transform: scale(1.2);
+ }
+ 

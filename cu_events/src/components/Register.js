@@ -98,7 +98,7 @@ const Register = () => {
                 <button type="submit" className="btn btn-primary w-100">Register</button>
               </form>
               <div className='my-5 container text-center'>
-              Already have an account? <Link to="/login">Login now</Link>
+              Already have an account? <Link to="/login" style={{color: "#ff7e5f"}}>Login now</Link>
               </div>
             </div>
           </div>

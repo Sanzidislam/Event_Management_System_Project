@@ -71,7 +71,7 @@ const Login = ({ setIsLoggedIn }) => {
             </button>
           </form>
           <div className="my-5 container text-center">
-            Do not have an account? <Link to="/register">Register now</Link>
+            Do not have an account? <Link to="/register" style={{color: "#ff7e5f"}}>Register now</Link>
           </div>
         </div>
       </div>

@@ -40,11 +40,11 @@ const CreateEvent = () => {
       setVenues([]);
     }
   }, [eventData.location_id]);
-  useEffect(() => {
-    if (eventData.venue_id && eventData.event_date) {
-      checkVenueAvailability(eventData.venue_id, eventData.event_date);
-    }
-  }, [eventData.venue_id, eventData.event_date]);
+  // useEffect(() => {
+  //   if (eventData.venue_id && eventData.event_date) {
+  //     checkVenueAvailability(eventData.venue_id, eventData.event_date);
+  //   }
+  // }, [eventData.venue_id, eventData.event_date]);
 
   const handleChange = (e) => setEventData({ ...eventData, [e.target.name]: e.target.value });
   const handleSubmit = async (e) => {
@@ -57,19 +57,20 @@ const CreateEvent = () => {
       alert('Event creation failed!');
     }
   };
-    const checkVenueAvailability = async (venueId, eventDate) => {
-    try {
-      const response = await axios.post("http://localhost:5000/check-venue", {
-        venue_id: venueId,
-        event_date: eventDate,
-      });
+  //   const checkVenueAvailability = async (venueId, eventDate) => {
+  //   try {
+  //     const response = await axios.post("http://localhost:5000/events/check-venue/", {
+  //       venue_id: venueId,
+  //       event_date: eventDate,
+  //     });
+  //     console.log(venueId);
   
-      setIsVenueAvailable(response.data.isAvailable);
-    } catch (error) {
-      console.error("Error checking venue availability:", error);
-      setIsVenueAvailable(false);
-    }
-  };
+  //     setIsVenueAvailable(response.data.isAvailable);
+  //   } catch (error) {
+  //     console.error("Error checking venue availability:", error);
+  //     setIsVenueAvailable(false);
+  //   }
+  // };
 
   return (
     <div className="container mt-5">

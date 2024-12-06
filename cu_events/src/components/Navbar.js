@@ -8,7 +8,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
       <div className="container">
         <Link className="navbar-brand fw-bold" to="/">
           CU Campus Events
@@ -42,12 +42,19 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           <div className="d-flex">
             {!isLoggedIn ? (
               <Link to="/login">
-                <button className="btn btn-danger me-2" style={{backgroundColor: "#ff7043"}} >Login</button>
+                <button
+                  className="btn btn-danger me-2"
+                  style={{ backgroundColor: '#ff7043' }}
+                >
+                  Login
+                </button>
               </Link>
             ) : (
               <>
                 <Link to="/profile">
-                  <button className="btn btn-outline-secondary me-2">Profile</button>
+                  <button className="btn btn-outline-secondary me-2">
+                    Profile
+                  </button>
                 </Link>
                 <Link to="/">
                   <button className="btn btn-danger" onClick={handleLogout}>

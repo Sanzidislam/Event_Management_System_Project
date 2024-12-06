@@ -33,7 +33,7 @@ const EventCard = ({ event, venues, onShowDetails }) => {
   const fetchRegistrationCount = async () => {
     try {
       const data = await getRegistrationCount(event.event_id);
-      console.log(data.count);
+      // console.log(data.count);
       setRegistrationCount(data.count);
       setIsFull(data.count >= event.max_attendees); // Check if registration is full
     } catch (error) {
