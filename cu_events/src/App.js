@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './components/HomePage';
 import Login from './components/Login';
@@ -20,7 +20,16 @@ import Footer from './components/footer';
 
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+      // Retrieve login state from localStorage or default to false
+      const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return localStorage.getItem('isLoggedIn') === 'true';
+      });
+    
+      // Save login state to localStorage whenever it changes
+      useEffect(() => {
+        localStorage.setItem('isLoggedIn', isLoggedIn);
+      }, [isLoggedIn]);
   return (<div>
       <Router>
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />

@@ -12,13 +12,18 @@ import { fetchVenues } from "../../services/venueService";
 import EventDetailsModal from "../showEvents/EventDetailsModal";
 import EditEventModal from "./EditEventModal";
 import ShowRegisteredUsersModal from "./ShowRegisteredUsersModal";
+import ShowReviewsMOdal from "./ShowReviewsModal";
 import "../../all-css/Profile.css"
+import RegisteredEventCard from "./RegisteredEventCard";
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [events, setEvents] = useState([]);
   const [registeredEvents, setRegisteredEvents] = useState([]);
   const [showCreatedEvents, setShowCreatedEvents] = useState(true);
   const [registeredUsers, setRegisteredUsers] = useState([]);
+  const [eventReviews, setEventReviews] = useState([]);
+  const [showReviewsModal , setShowReviewsModal] = useState(false);
+  const [eventReviewsStatus, setEventReviewsStatus] = useState(false);
   const [showRegisteredUsersModal, setShowRegisteredUsersModal] = useState(false);
   const [registered_users_status, set_registered_users_status] = useState('');
   const navigate = useNavigate();
@@ -27,6 +32,7 @@ const Profile = () => {
   const [venues, setVenues] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [editEvent, setEditEvent] = useState(null);
+
   ///////
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -80,6 +86,18 @@ loadVenues();
       alert("Failed to fetch registered users.");
     }
   };
+  const fetchEventReviews = async(eventId) =>{
+    try{
+      const response = await axios.get(`http://localhost:5000/reviews/${eventId}/allReviews`);
+      setEventReviews(response.data);
+      setEventReviewsStatus(response.status);
+      setShowReviewsModal(true);
+    }
+    catch(error){
+      console.error("Error fetching event reviews:", error);
+      alert("Failed to fetch Reviews");
+    }
+  }
   
 
   const handleEditEvent = (eventId) => {
@@ -153,6 +171,8 @@ loadVenues();
               onEdit={setEditEvent}
               onDelete={handleDelete}
               onShowRegisteredUsers={fetchRegisteredUsers}
+              onShowReviews={fetchEventReviews}
+
             />
           ))}
         </div>
@@ -177,11 +197,13 @@ loadVenues();
       ) : (
         <div className="row">
           {registeredEvents.map((event) => (
-            <EventCardOfRegister
+            <RegisteredEventCard
               key={event.event_id}
               event={event}
               venues={venues}
+              id = {userProfile.user_id}
               onShowDetails={setSelectedEvent}
+              token = {localStorage.getItem('token')}
             />
           ))}
         </div>
@@ -200,6 +222,13 @@ loadVenues();
     state = {registered_users_status}
   />
  )} 
+      {showReviewsModal && (
+  <ShowReviewsMOdal
+    users={eventReviews}
+    onClose={() => setShowReviewsModal(false)}
+    state = {eventReviewsStatus}
+  />
+ )}
 
 
     </div>

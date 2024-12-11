@@ -30,7 +30,7 @@ const getEventsOfUser = (req, res) => {
 const getEventsRegisteredByUser = (req, res) => {
   const user_id = req.params;
   // console.log(user_id.user_id);
-  db.query("select * from event e join registers r on r.event_id = e.event_id join user u on u.user_id = r.user_id where u.user_id = ?;",[user_id.user_id],
+  db.query("with q1 as(select e.event_id,e.user_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees,e.category_id,e.venue_id,r.registration_date from event e join registers r on r.event_id = e.event_id join user u on u.user_id = r.user_id where u.user_id = ?) select q1.event_id, q1.event_name,q1.description,q1.event_date,q1.start_time,q1.end_time,q1.max_attendees,q1.category_id,q1.venue_id,q1.user_id,q1.registration_date,u.name,u.email from q1 join user u on q1.user_id = u.user_id;",[user_id.user_id],
     (err,results)=>{
     if (err) return res.status(500).send("Error retrieving events");
     res.status(200).json(results);

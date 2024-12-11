@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { fetchUpdateNotifications } from '../services/notificationService';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const [notifications, setNotifications] = useState([]);
+  const [notificationsUpdated, setNotificationsUpdated] = useState(false);
+  const token = localStorage.getItem('token');
+
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.setItem('token', '');
   };
+
+  // Fetch notifications when user logs in or updates
+  useEffect(() => {
+    if (isLoggedIn && token) {
+      fetchUpdateNotifications(token) // Call service function
+        .then((response) => {
+          console.log(response.notifications);
+          // Check if the response is valid and contains 'notifications'
+          if (response.status === 201) {
+            setNotifications(null); // Set notifications to null if status is 201
+          } else if (response.notifications) {
+            setNotifications(response.notifications || []); // Safely set the notifications to state
+          } else {
+            setNotifications([]); // Set to empty array if no notifications are found
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications:", error);
+        });
+    }
+  }, [isLoggedIn, token]); // Dependency on isLoggedIn and token
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
@@ -39,7 +65,34 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
               </li>
             )}
           </ul>
-          <div className="d-flex">
+          <div className="d-flex align-items-center">
+            {isLoggedIn && (
+              <div className="dropdown me-3">
+                <button
+                  className="btn btn-light dropdown-toggle"
+                  type="button"
+                  id="notificationsDropdown"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i className="bi bi-bell fs-5"></i> {/* Bell icon */}
+                </button>
+                <ul
+                  className="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="notificationsDropdown"
+                >
+                  {notifications.length > 0 ? (
+                    notifications.map((note) => (
+                      <li key={note.notification_id} className="dropdown-item">
+                        {note.notification_text}
+                      </li>
+                    ))
+                  ) : (
+                    <li className="dropdown-item text-muted">No notifications</li>
+                  )}
+                </ul>
+              </div>
+            )}
             {!isLoggedIn ? (
               <Link to="/login">
                 <button

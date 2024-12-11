@@ -17,7 +17,8 @@ const locationRoutes = require("./routes/locations");
 const venueRoutes = require("./routes/venues");
 const categoryRoutes = require("./routes/categories");
 const reviewRoutes = require("./routes/reviews");
-
+const topListRoutes = require("./routes/topListRoutes");
+const notificationRoutes = require("./routes/notifications")
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve static files
 
 // Use routes
@@ -27,6 +28,8 @@ app.use("/locations", locationRoutes);
 app.use("/venues", venueRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/reviews", reviewRoutes);
+app.use("/notifications", notificationRoutes); 
+app.use("/topList",topListRoutes);  
 app.listen(5000, () => {
   console.log("Server is running on port 5000.");
 });
