@@ -9,3 +9,7 @@ report/main.log
 /cu_events/node_modules
 /cu_events/backend/node_modules
 report/crud_ops
+/cu_events/backend/uploads
+
+
+/report
