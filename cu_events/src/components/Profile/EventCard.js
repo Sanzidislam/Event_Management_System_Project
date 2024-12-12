@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { getRegistrationCount } from "../../services/eventService";
-const EventCard = ({ event, venues, onShowDetails, onEdit, onDelete, onShowRegisteredUsers }) => {
+
+const EventCard = ({
+  event,
+  venues,
+  onShowDetails,
+  onEdit,
+  onDelete,
+  onShowRegisteredUsers,
+  onShowReviews,
+}) => {
   const venue = venues.find((v) => v.venue_id === event.venue_id);
   const [registrationCount, setRegistrationCount] = useState(0);
-  useEffect(()=>{
+
+  useEffect(() => {
     fetchRegistrationCount();
-  },[event.event_id]);  
+  }, [event.event_id]);
+
   const fetchRegistrationCount = async () => {
     try {
       const data = await getRegistrationCount(event.event_id);
-      // console.log(data.count);
       setRegistrationCount(data.count);
-      } catch (error) {
+    } catch (error) {
       console.error("Error fetching registration count:", error);
     }
   };
 
-  // console.log(event);
+  // Check if the event has passed
+  const isPastEvent = new Date(event.event_date) < new Date();
+
   return (
     <div className="col-md-4 mb-4">
       <div className="card">
@@ -38,25 +50,35 @@ const EventCard = ({ event, venues, onShowDetails, onEdit, onDelete, onShowRegis
           >
             Show Details
           </button>
-          <button
-            className="btn btn-warning me-2"
-            onClick={() => onEdit(event)}
-          >
-            Edit
-          </button>
-          <button
-            className="btn btn-danger"
-            onClick={() => onDelete(event.event_id)}
-          >
-            Delete
-          </button>
-          
-          <button
-            className="btn btn-info"
-            onClick={() => onShowRegisteredUsers(event.event_id)}
-          >
-          See Registered Users
-          </button>
+          {isPastEvent ? (
+            <button
+              className="btn btn-primary"
+              onClick={() => onShowReviews(event.event_id)}
+            >
+              Show Reviews
+            </button>
+          ) : (
+            <>
+              <button
+                className="btn btn-warning me-2"
+                onClick={() => onEdit(event)}
+              >
+                Edit
+              </button>
+              <button
+                className="btn btn-danger me-2"
+                onClick={() => onDelete(event.event_id)}
+              >
+                Delete
+              </button>
+              <button
+                className="btn btn-info"
+                onClick={() => onShowRegisteredUsers(event.event_id)}
+              >
+                See Registered Users
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

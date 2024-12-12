@@ -73,11 +73,16 @@ const EventCard = ({ event, venues, onShowDetails,token}) => {
 
   const handleReviewSubmit = async () => {
     setIsSubmitting(true);
+    const review = {
+      review_text: reviewText,
+      rating: rating,
+      user_id: event.user_id
+    }
     try {
-      await axios.post(`http://localhost:5000/reviews/${event.event_id}/review`, {
-        review_text: reviewText,
-        rating: rating,
-        user_id: event.user_id
+      await axios.post(`http://localhost:5000/reviews/${event.event_id}/review`, review,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       alert("Review submitted successfully!");
       setReviewText("");
@@ -94,6 +99,7 @@ const EventCard = ({ event, venues, onShowDetails,token}) => {
 
   return (
     <div className="col-md-4 mb-4">
+      {/* <h1>Hello</h1> */}
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{event.event_name}</h5>
