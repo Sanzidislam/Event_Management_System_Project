@@ -196,7 +196,7 @@ loadVenues();
     </div>
       ) : (
         <div className="row">
-          {registeredEvents.map((event) => (
+          {/* {registeredEvents.map((event) => (
             <RegisteredEventCard
               key={event.event_id}
               event={event}
@@ -205,7 +205,21 @@ loadVenues();
               onShowDetails={setSelectedEvent}
               token = {localStorage.getItem('token')}
             />
-          ))}
+          ))} */}
+          {registeredEvents.length === 0 ? (
+    <p>You haven't registered for any events yet.</p>
+  ) : (
+    registeredEvents.map((event) => (
+      <RegisteredEventCard
+        key={event.event_id}
+        event={event}
+        venues={venues}
+        id={userProfile.user_id}
+        onShowDetails={setSelectedEvent}
+        token={localStorage.getItem('token')}
+      />
+    ))
+  )}
         </div>
       )}
       {selectedEvent && (
