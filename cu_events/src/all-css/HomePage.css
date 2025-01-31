@@ -8,6 +8,7 @@ body {
 
 .homepage-container {
   text-align: center;
+  background-color: #f8f9fa;
 }
 
 /* Hero Section */
@@ -39,6 +40,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  align-items: center;
 }
 
 .cta-text {
@@ -72,93 +74,78 @@ body {
   transition: transform 0.2s;
 }
 
-/* Features Section */
-.features-section {
-  background-color: #f8f9fa;
-  padding: 50px 20px;
-  border-top: 2px solid #ff7e5f;
-}
-
-.features-title {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #333;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  justify-content: center;
-  align-items: stretch;
-}
-
-.feature-card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-}
-
-.feature-icon {
-  font-size: 2.5rem;
-  color: #ff7e5f;
-  margin-bottom: 15px;
-}
-
-.feature-card h3 {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.feature-card p {
-  font-size: 1rem;
-  color: #666;
-  line-height: 1.6;
-}
-
-
-
-
-.popular-locations-section {
-  margin: 40px 0;
-  text-align: center;
-}
-
+/* Section Titles */
 .section-title {
-  font-size: 24px;
+  font-size: 2rem;
   margin-bottom: 20px;
-  color: #ff6f00; /* Matches the orange theme */
+  color: #ff7e5f;
+  font-weight: bold;
 }
 
+/* Grid Layout */
+.creators-grid,
 .locations-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
-  padding: 0 20px;
-}
-
-.location-card {
   padding: 20px;
-  border: 1px solid #ff7e5f;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
 
-.location-card h3 {
-  font-size: 18px;
+/* Shared Card Styles */
+.creator-card,
+.location-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.creator-card:hover,
+.location-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Top Creators Specific */
+.creator-profile-pic {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+}
+
+.creator-name {
+  font-size: 1.2rem;
+  font-weight: bold;
   color: #333;
-  margin-bottom: 10px;
+}
+
+.creator-events {
+  font-size: 1rem;
+  color: #777;
+}
+
+/* Popular Locations Specific */
+.location-card h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
 }
 
 .location-card p {
-  font-size: 14px;
-  color: #555;
+  font-size: 1rem;
+  color: #777;
+}
+
+/* No Data Message */
+.no-creators-message,
+.no-locations-message {
+  font-size: 1rem;
+  color: #888;
+  margin-top: 20px;
 }

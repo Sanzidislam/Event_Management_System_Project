@@ -96,65 +96,78 @@ const ShowEvents = () => {
     setSelectedDate("");
   };
 
-  return (
-    <div className="show-events-container">
-      <div className="sidebar">
-        {/* <button className="btn btn-primary mb-3">+ Create Event</button> */}
-        <Link to= "/create-event" className="btn btn-primary mb-3">+ Create Event</Link>
-        <h4>Filters</h4>
-        <LocationSelect
-          locations={locations}
-          handleChange={(e) => setSelectedLocation(e.target.value)}
-          selectedLocation={selectedLocation}
+return (
+  <div className="show-events-container">
+    {/* Search Bar */}
+    <div className="search-bar">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Search events..."
+      />
+      <button className="btn btn-primary">Search</button>
+    </div>
+
+    <div className="sidebar">
+      <Link to="/create-event" className="btn btn-primary mb-3">
+        + Create Event
+      </Link>
+      <h4>Filters</h4>
+      <LocationSelect
+        locations={locations}
+        handleChange={(e) => setSelectedLocation(e.target.value)}
+        selectedLocation={selectedLocation}
+      />
+      <CategorySelect
+        categories={categories}
+        handleChange={(e) => setSelectedCategory(e.target.value)}
+        selectedCategory={selectedCategory}
+      />
+      <div className="form-group mt-3">
+        <label htmlFor="datePicker">Select Date</label>
+        <input
+          type="date"
+          id="datePicker"
+          className="form-control"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
         />
-        <CategorySelect
-          categories={categories}
-          handleChange={(e) => setSelectedCategory(e.target.value)}
-          selectedCategory={selectedCategory}
-        />
-        <div className="form-group mt-3">
-          <label htmlFor="datePicker">Select Date</label>
-          <input
-            type="date"
-            id="datePicker"
-            className="form-control"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-          />
+      </div>
+      <button className="btn btn-secondary mt-3" onClick={resetFilters}>
+        Reset Filters
+      </button>
+    </div>
+
+    <div className="events-section">
+      {filteredEvents.length === 0 ? (
+        <div className="no-events">
+          <p>No events match the selected filters.</p>
         </div>
-        <button className="btn btn-secondary mt-3" onClick={resetFilters}>
-          Reset Filters
-        </button>
-      </div>
-
-      <div className="events-section">
-        {filteredEvents.length === 0 ? (
-          <div className="no-events">
-            <p>No events match the selected filters.</p>
-          </div>
-        ) : (
-          <div className="event-cards">
-            {filteredEvents.map((event) => (
-              <EventCard
-                key={event.event_id}
-                event={event}
-                venues={venues}
-                onShowDetails={setSelectedEvent}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {selectedEvent && (
-        <EventDetailsModal
-          event={selectedEvent}
-          venues={venues}
-          onClose={() => setSelectedEvent(null)}
-        />
+      ) : (
+        <div className="event-cards">
+          {filteredEvents.map((event) => (
+            <EventCard
+              key={event.event_id}
+              event={event}
+              venues={venues}
+              onShowDetails={setSelectedEvent}
+            />
+          ))}
+        </div>
       )}
     </div>
-  );
+
+    {selectedEvent && (
+      <EventDetailsModal
+        event={selectedEvent}
+        venues={venues}
+        onClose={() => setSelectedEvent(null)}
+      />
+    )}
+  </div>
+);
+
+
 };
 
 export default ShowEvents;

@@ -19,7 +19,7 @@ const EventCard = ({ event, venues, onShowDetails }) => {
     };
     fetchRegistrationStatus();
     fetchRegistrationCount();
-  }, [event.event_id]);
+  }, [event.event_id,isRegistered]);
 
   const handleToggleRegistration = async () => {
     if (isRegistered) {
@@ -41,7 +41,7 @@ const EventCard = ({ event, venues, onShowDetails }) => {
     }
   };
   return (
-    <div className="col-md-4 mb-4">
+    <div className="col-sm-6 col-md-5 mb-4">
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{event.event_name}</h5>
@@ -69,16 +69,19 @@ const EventCard = ({ event, venues, onShowDetails }) => {
           </button>
           <button
   className={`btn ${isRegistered ? "btn-danger" : "btn-success"}`}
-  disabled={isFull} // Disable if the event is full
+  disabled={!isRegistered && isFull} // Disable if the event is full
   onClick={() => {
-    if (!isFull) {
-      handleToggleRegistration(); // Toggle between Register and Unregister
+    if (isRegistered) {
+      handleToggleRegistration(); // Allow user to unregister
+    } else if (!isFull) {
+      handleToggleRegistration(); // Allow registration if not full
     } else {
-      alert("Event is full!");
+      alert("Event is full!"); // Show alert for new users when event is full
     }
   }}
 >
-  {isFull ? "Full" : isRegistered ? "Unregister" : "Register"}
+  {/* {isFull ? "Full" : isRegistered ? "Unregister" : "Register"} */}
+  {isRegistered? "Unregister": isFull?"Full":"Register"}
 </button>
 
         </div>

@@ -195,7 +195,7 @@ loadVenues();
       )}
     </div>
       ) : (
-        <div className="row">
+        <div className="row mt-5">
           {/* {registeredEvents.map((event) => (
             <RegisteredEventCard
               key={event.event_id}

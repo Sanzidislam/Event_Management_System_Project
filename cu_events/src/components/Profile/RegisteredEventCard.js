@@ -60,7 +60,7 @@ const EventCard = ({ event, venues, onShowDetails,token}) => {
     if (new Date(event.event_date) < new Date()) {
       fetchReviewData(); // Fetch review data if the event is past
     }
-  }, [event.event_id, event.event_date]);
+  }, [event.event_id, event.event_date,isSubmitting]);
 
   const handleToggleRegistration = async () => {
     if (isRegistered) {

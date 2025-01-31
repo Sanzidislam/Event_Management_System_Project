@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getRegistrationCount } from "../../services/eventService";
-
+import { getAverageRating } from "../../services/reviewService";
 const EventCard = ({
   event,
   venues,
@@ -12,8 +12,14 @@ const EventCard = ({
 }) => {
   const venue = venues.find((v) => v.venue_id === event.venue_id);
   const [registrationCount, setRegistrationCount] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
+      const fetchAverageRating = async () => {
+        const averageRatingData = await getAverageRating(event.event_id);
+        setAverageRating(averageRatingData);
+      };
+      fetchAverageRating();
     fetchRegistrationCount();
   }, [event.event_id]);
 
@@ -44,6 +50,14 @@ const EventCard = ({
           <p>
             <strong>Registered:</strong> {registrationCount} / {event.max_attendees}
           </p>
+          {isPastEvent ? (
+            averageRating ? (
+              <p className="mt-2">
+                <strong>Average Rating:</strong> {isNaN(averageRating) ? 'N/A' : parseFloat(averageRating).toFixed(2)}/5
+              </p>
+            ) : <p className="mt-2">No reviews yet.</p>
+          ) : null}
+
           <button
             className="btn btn-info me-2"
             onClick={() => onShowDetails(event)}
@@ -57,6 +71,7 @@ const EventCard = ({
             >
               Show Reviews
             </button>
+            
           ) : (
             <>
               <button
@@ -72,7 +87,7 @@ const EventCard = ({
                 Delete
               </button>
               <button
-                className="btn btn-info"
+                className="btn btn-info my-2"
                 onClick={() => onShowRegisteredUsers(event.event_id)}
               >
                 See Registered Users

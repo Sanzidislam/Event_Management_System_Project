@@ -16,6 +16,7 @@ const getMostPopularLocations = (req,res) =>{
 
   const getTopCreators = (req,res) =>{
     db.query(`
+      
         select  user.user_id ,count(event.event_id) as count_events, user.name, user.profile_picture
         from event join user on event.user_id = user.user_id
         group by(user_id)
