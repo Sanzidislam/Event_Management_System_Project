@@ -31,7 +31,7 @@ const App = () => {
         sessionStorage.setItem('isLoggedIn', isLoggedIn);
       }, [isLoggedIn]);
       
-  return (<div>
+  return (
       <Router>
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
@@ -47,7 +47,6 @@ const App = () => {
       </Routes>
         {/* <Footer/> */}
     </Router>
-    </div>
 
   );
 };

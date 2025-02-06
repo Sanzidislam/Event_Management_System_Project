@@ -41,26 +41,27 @@ const EventCard = ({ event, venues, onShowDetails }) => {
     }
   };
   return (
-    <div className="col-sm-6 col-md-5 mb-4">
-      <div className="card">
+    <div className="col-sm-3 col-md-3 mb-3">
+      <div className="card" style={{ minHeight: "350px" }}>
         <div className="card-body">
-          <h5 className="card-title">{event.event_name}</h5>
-          <p>
-            <strong></strong> {event.description.substr(0,30)+'...'}
-          </p>
-          <p className="card-text">
-            <strong>Date:</strong>{" "}
-            {new Date(event.event_date).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Venue:</strong> {venue ? venue.venue_name : "Unknown"}
-          </p>
-          <p>
-            <strong>Location:</strong> {venue ? venue.location_name : "Unknown"}
-          </p>
-          <p>
-            <strong>Registered:</strong> {registrationCount} / {event.max_attendees}
-          </p>
+          <h5 className="card-title" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{event.event_name}</h5>
+          <div style={{ fontSize: "0.9rem", textAlign: "left" }}>
+            <p>
+              <strong>Description:</strong> {event.description.length > 15 ? event.description.substr(0, 15) + '...' : event.description}
+            </p>
+            <p className="card-text">
+              <strong>Date:</strong> {new Date(event.event_date).toLocaleDateString()}
+            </p>
+            <p>
+              <strong>Venue:</strong> {venue ? venue.venue_name : "Unknown"}
+            </p>
+            <p>
+              <strong>Location:</strong> {venue ? venue.location_name : "Unknown"}
+            </p>
+            <p>
+              <strong>Registered:</strong> {registrationCount} / {event.max_attendees}
+            </p>
+          </div>
           <button
             className="btn btn-info me-2"
             onClick={() => onShowDetails(event)}
@@ -68,22 +69,20 @@ const EventCard = ({ event, venues, onShowDetails }) => {
             Show Details
           </button>
           <button
-  className={`btn ${isRegistered ? "btn-danger" : "btn-success"}`}
-  disabled={!isRegistered && isFull} // Disable if the event is full
-  onClick={() => {
-    if (isRegistered) {
-      handleToggleRegistration(); // Allow user to unregister
-    } else if (!isFull) {
-      handleToggleRegistration(); // Allow registration if not full
-    } else {
-      alert("Event is full!"); // Show alert for new users when event is full
-    }
-  }}
->
-  {/* {isFull ? "Full" : isRegistered ? "Unregister" : "Register"} */}
-  {isRegistered? "Unregister": isFull?"Full":"Register"}
-</button>
-
+            className={`btn ${isRegistered ? "btn-danger" : "btn-success"}`}
+            disabled={!isRegistered && isFull} // Disable if the event is full
+            onClick={() => {
+              if (isRegistered) {
+                handleToggleRegistration(); // Allow user to unregister
+              } else if (!isFull) {
+                handleToggleRegistration(); // Allow registration if not full
+              } else {
+                alert("Event is full!"); // Show alert for new users when event is full
+              }
+            }}
+          >
+            {isRegistered ? "Unregister" : isFull ? "Full" : "Register"}
+          </button>
         </div>
       </div>
     </div>

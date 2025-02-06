@@ -98,7 +98,7 @@ const EventCard = ({ event, venues, onShowDetails,token}) => {
   const isPastEvent = new Date(event.event_date) < new Date();
 
   return (
-    <div className="col-md-4 mb-4">
+    <div className="col-sm-3 col-md-3 mb-4">
       {/* <h1>Hello</h1> */}
       <div className="card">
         <div className="card-body">

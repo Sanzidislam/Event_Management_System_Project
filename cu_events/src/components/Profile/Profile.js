@@ -145,7 +145,7 @@ loadVenues();
   if (!userProfile) return <div>Loading...</div>;
 
   return (
-    <div className="container mt-5">
+    <div className="profile-page">
       <ProfileInfo userProfile={userProfile} />
       <ToggleButtons onToggle={setShowCreatedEvents} showCreatedEvents={showCreatedEvents} />
       {showCreatedEvents ? (
@@ -161,7 +161,7 @@ loadVenues();
         </div>
         </>
       ) : (
-        <div className="row">
+        <div className="row event-cards">
           {events.map((event) => (
             <EventCard
               key={event.event_id}
@@ -195,7 +195,7 @@ loadVenues();
       )}
     </div>
       ) : (
-        <div className="row mt-5">
+        <div className="row mt-5 event-cards">
           {/* {registeredEvents.map((event) => (
             <RegisteredEventCard
               key={event.event_id}
@@ -210,14 +210,17 @@ loadVenues();
     <p>You haven't registered for any events yet.</p>
   ) : (
     registeredEvents.map((event) => (
-      <RegisteredEventCard
-        key={event.event_id}
-        event={event}
-        venues={venues}
-        id={userProfile.user_id}
-        onShowDetails={setSelectedEvent}
-        token={localStorage.getItem('token')}
+      // <div className="event-cards">
+        <RegisteredEventCard
+            key={event.event_id}
+            event={event}
+            venues={venues}
+            id={userProfile.user_id}
+            onShowDetails={setSelectedEvent}
+            token={localStorage.getItem('token')}
       />
+      // </div>
+      
     ))
   )}
         </div>

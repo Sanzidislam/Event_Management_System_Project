@@ -36,7 +36,7 @@ const EventCard = ({
   const isPastEvent = new Date(event.event_date) < new Date();
 
   return (
-    <div className="col-md-4 mb-4">
+    <div className="col-sm-3 col-md-3 mb-3">
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{event.event_name}</h5>

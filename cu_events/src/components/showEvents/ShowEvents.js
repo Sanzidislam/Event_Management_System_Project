@@ -97,22 +97,15 @@ const ShowEvents = () => {
   };
 
 return (
-  <div className="show-events-container">
+  <div className="events-page">
     {/* Search Bar */}
-    <div className="search-bar">
-      <input
-        type="text"
-        className="form-control"
-        placeholder="Search events..."
-      />
-      <button className="btn btn-primary">Search</button>
+    <div className="search-container">
+      <input type="text" placeholder="Search events..." className="search-input" />
+      <button className="search-btn">Search</button>
     </div>
 
-    <div className="sidebar">
-      <Link to="/create-event" className="btn btn-primary mb-3">
-        + Create Event
-      </Link>
-      <h4>Filters</h4>
+    {/* Filters in One Line */}
+    <div className="filters-container">
       <LocationSelect
         locations={locations}
         handleChange={(e) => setSelectedLocation(e.target.value)}
@@ -123,26 +116,19 @@ return (
         handleChange={(e) => setSelectedCategory(e.target.value)}
         selectedCategory={selectedCategory}
       />
-      <div className="form-group mt-3">
-        <label htmlFor="datePicker">Select Date</label>
-        <input
-          type="date"
-          id="datePicker"
-          className="form-control"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
-      </div>
-      <button className="btn btn-secondary mt-3" onClick={resetFilters}>
-        Reset Filters
-      </button>
+      <input
+        type="date"
+        className="date-picker"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+      />
+      <button className="reset-btn" onClick={resetFilters}>Reset</button>
     </div>
 
+    {/* Events Section */}
     <div className="events-section">
       {filteredEvents.length === 0 ? (
-        <div className="no-events">
-          <p>No events match the selected filters.</p>
-        </div>
+        <p className="no-events">No events match the selected filters.</p>
       ) : (
         <div className="event-cards">
           {filteredEvents.map((event) => (

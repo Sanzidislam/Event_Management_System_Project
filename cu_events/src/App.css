@@ -36,5 +36,6 @@
 } */
 
 body {
+  width: 100%;;
   padding-top: 60px; /* Adjust according to the height of your navbar */
 }

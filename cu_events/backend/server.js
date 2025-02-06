@@ -4,7 +4,9 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path  = require("path");
 const app = express();
+const dotenv = require("dotenv");
 
+dotenv.config();
 app.use(cors());
 
 app.use(bodyParser.json());
@@ -30,6 +32,7 @@ app.use("/categories", categoryRoutes);
 app.use("/reviews", reviewRoutes);
 app.use("/notifications", notificationRoutes); 
 app.use("/topList",topListRoutes);  
-app.listen(5000, () => {
-  console.log("Server is running on port 5000.");
+app.listen(process.env.PORT, () => {
+  console.log("Server is running on port " + process.env.PORT); 
+
 });

@@ -50,7 +50,7 @@ const getReview = async (req, res) => {
 const getUserReview = async (req, res) => {
   const { event_id } = req.params;
   const user_id = req.user.user_id;  // Assuming you're using middleware to get the logged-in user's ID
-  console.log(event_id, user_id);
+  // console.log(event_id, user_id);
   try {
     const [rows] = await db.promise().query(
       "SELECT review_text, rating FROM reviews WHERE event_id = ? AND user_id = ?",
