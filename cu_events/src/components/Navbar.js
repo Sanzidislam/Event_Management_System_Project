@@ -36,7 +36,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
       <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">
+        <Link 
+          className="navbar-brand fw-bold" to="/"
+          // style={{color: '#ff7043'}}
+          >
+          
           CU Campus Events
         </Link>
         <button
@@ -105,12 +109,19 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             ) : (
               <>
                 <Link to="/profile">
-                  <button className="btn btn-outline-secondary me-2">
+                  <button 
+                    className="btn btn-outline-secondary me-2"
+                    style={{color: 'black'}}
+                    >
                     Profile
                   </button>
                 </Link>
                 <Link to="/">
-                  <button className="btn btn-danger" onClick={handleLogout}>
+                  <button 
+                    className="btn btn-danger"
+                    style={{backgroundColor: '#ff7043'}} 
+                    onClick={handleLogout}
+                  >
                     Logout
                   </button>
                 </Link>

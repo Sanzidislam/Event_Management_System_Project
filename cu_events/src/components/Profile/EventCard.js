@@ -66,7 +66,7 @@ const EventCard = ({
           </button>
           {isPastEvent ? (
             <button
-              className="btn btn-primary"
+              className="btn btn-primary mt-2"
               onClick={() => onShowReviews(event.event_id)}
             >
               Show Reviews

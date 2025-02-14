@@ -13,6 +13,7 @@ import EventDetailsModal from "../showEvents/EventDetailsModal";
 import EditEventModal from "./EditEventModal";
 import ShowRegisteredUsersModal from "./ShowRegisteredUsersModal";
 import ShowReviewsMOdal from "./ShowReviewsModal";
+
 import "../../all-css/Profile.css"
 import RegisteredEventCard from "./RegisteredEventCard";
 const Profile = () => {
@@ -25,7 +26,9 @@ const Profile = () => {
   const [showReviewsModal , setShowReviewsModal] = useState(false);
   const [eventReviewsStatus, setEventReviewsStatus] = useState(false);
   const [showRegisteredUsersModal, setShowRegisteredUsersModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [registered_users_status, set_registered_users_status] = useState('');
+
   const navigate = useNavigate();
   ////////
 

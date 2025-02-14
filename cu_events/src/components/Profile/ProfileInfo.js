@@ -134,14 +134,14 @@ const ProfileInfo = ({ userProfile }) => {
         )}
 
         <h1 className="card-title  mb-4" style={{ color: "#ff7e5f" }}>
-          Profile
+          {editableProfile.name}
         </h1>
 
         {!isEditingInfo ? (
           <div>
-            <p className="card-text">
+            {/* <p className="card-text">
               <strong>Name:</strong> {editableProfile.name}
-            </p>
+            </p> */}
             <p className="card-text">
               <strong>Email:</strong> {editableProfile.email}
             </p>

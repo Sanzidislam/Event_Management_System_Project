@@ -24,7 +24,7 @@ const EventCard = ({ event, venues, onShowDetails,token}) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const venue = venues.find((v) => v.venue_id === event.venue_id);
   const navigate = useNavigate();
-  console.log(event);
+  // console.log(event);
   useEffect(() => {
     const fetchRegistrationStatus = async () => {
       const status = await checkRegistrationStatus(event.event_id);
@@ -103,7 +103,7 @@ const EventCard = ({ event, venues, onShowDetails,token}) => {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{event.event_name}</h5>
-          <p>{event.description.substr(0, 30) + "..."}</p>
+          <p>{event.description? event.description.substr(0, 30) + "...":""}</p>
           <p className="card-text">
             <strong>Date:</strong> {new Date(event.event_date).toLocaleDateString()}
           </p>
@@ -166,12 +166,13 @@ const EventCard = ({ event, venues, onShowDetails,token}) => {
                     onChange={(e) => setRating(Number(e.target.value))}
                     disabled={isSubmitting}
                   >
-                    <option value="">Select Rating</option>
-                    {[1, 2, 3, 4, 5].map((val) => (
-                      <option key={val} value={val}>
-                        {val}
-                      </option>
-                    ))}
+<option value="">Select Rating</option>
+{[1, 2, 3, 4, 5].map((val) => (
+  <option key={val} value={val}>
+    {"★".repeat(val)}
+  </option>
+))}
+
                   </select>
                   <button
                     className="btn btn-primary"

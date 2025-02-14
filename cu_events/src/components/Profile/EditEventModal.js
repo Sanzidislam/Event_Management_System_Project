@@ -56,9 +56,11 @@ const EditEventModal = ({ event, onClose, onSave }) => {
                   type="date"
                   name="event_date"
                   className="form-control"
-                  value={formData.event_date}
+                  // value={formData.event_date}
+                  value={formData.event_date ? formData.event_date.split("T")[0] : ""}
                   onChange={handleChange}
                 />
+                {/* {console.log(formData.event_date)} */}
               </div>
               <div className="mb-3">
                 <label htmlFor="start_time" className="form-label">start_time</label>

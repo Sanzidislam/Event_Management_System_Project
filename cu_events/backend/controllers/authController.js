@@ -56,6 +56,23 @@ const loginUser = (req, res) => {
   });
 };
 
+const updatePassword = (req, res) => {
+  const { user_id } = req.params;
+  const { oldPassword, newPassword } = req.body;
+
+  db.query("SELECT * FROM user WHERE user_id = ?", [user_id], async (err, results) => {
+    if (err || results.length === 0) return res.status(401).send("Invalid credentials");
+
+    const isValid = await bcrypt.compare(oldPassword, results[0].password);
+    if (!isValid) return res.status(401).send("Invalid credentials");
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    db.query("UPDATE user SET password = ? WHERE user_id = ?", [hashedPassword, user_id], (updateErr) => {
+      if (updateErr) return res.status(500).send("Error updating password");
+      res.status(200).send("Password updated successfully");
+    });
+  });
+};
 
 
 const getProfile = (req, res) => {
@@ -135,5 +152,6 @@ module.exports = {
   loginUser, 
   getProfile,
   updateUserProfile,
-  uploadProfilePicture 
+  uploadProfilePicture,
+  updatePassword 
 };

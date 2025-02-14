@@ -1,7 +1,7 @@
 // auth.js
 const express = require("express");
 const multer = require("multer");
-const { registerUser, loginUser, getProfile , updateUserProfile, uploadProfilePicture} = require("../controllers/authController");
+const { registerUser, loginUser, getProfile , updateUserProfile, uploadProfilePicture, updatePassword} = require("../controllers/authController");
 const router = express.Router();
 const {authenticate} = require('../middlewares/authMiddleware')
 const path = require("path");
@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/register", registerUser);
+router.put("/update/password/:user_id",updatePassword);
 router.post("/login", loginUser);
 router.get("/profile", authenticate,getProfile); // Change POST to GET for profile fetching
 router.put(
