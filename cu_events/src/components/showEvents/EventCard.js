@@ -5,13 +5,13 @@ import {
   checkRegistrationStatus,
   getRegistrationCount
 } from "../../services/eventService";
-import { useNavigate } from "react-router-dom";
+
 const EventCard = ({ event, venues, onShowDetails }) => {
   const [isRegistered, setIsRegistered] = useState(false);
   const venue = venues.find((v) => v.venue_id === event.venue_id);
   const [registrationCount, setRegistrationCount] = useState(0);
   const [isFull, setIsFull] = useState(false);
-  const navigate = useNavigate();
+  // console.log(event);
   useEffect(() => {
     const fetchRegistrationStatus = async () => {
       const status = await checkRegistrationStatus(event.event_id);
@@ -55,7 +55,7 @@ const EventCard = ({ event, venues, onShowDetails }) => {
             <p>
               <strong>Venue:</strong> {venue ? venue.venue_name : "Unknown"}
             </p>
-            <p>
+            <p style={{minHeight: "20px"}}>
               <strong>Location:</strong> {venue ? venue.location_name : "Unknown"}
             </p>
             <p>
@@ -83,6 +83,13 @@ const EventCard = ({ event, venues, onShowDetails }) => {
           >
             {isRegistered ? "Unregister" : isFull ? "Full" : "Register"}
           </button>
+          <br />
+          <div className="mt-4">
+          For any queries <a href={`mailto:${event.email}`} className=" contact-creator">Contact Creator</a> 
+          </div>
+          {/* <button>
+            <a href="mailto:${even}"
+          </button> */}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 .events-page {
-  background: linear-gradient(to bottom right, #fad9c2, #fdfdfd);
+  background: linear-gradient(to bottom right, #f7f0eb, #fdfdfd);
   padding: 2rem;
   /* max-width: 1200px; */
   margin: auto;
@@ -15,7 +15,7 @@
 }
 
 .search-input {
-  width: 50%;
+  width: 25%;
   padding: 0.6rem;
   border: 2px solid #5da6ff;;
   border-radius: 6px;
@@ -24,6 +24,7 @@
 
 .search-btn {
   background-color: #5da6ff;
+   /* style={{ backgroundColor: '#ff7043' }} */
   color: white;
   border: none;
   padding: 0.6rem 1rem;
@@ -41,7 +42,7 @@
   justify-content: center;
   gap: 0.8rem;
   padding: 0.8rem;
-  background: #ffa96f;
+  background: #ffa96f93;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex-wrap: wrap;
@@ -63,7 +64,7 @@
 }
 
 .reset-btn {
-  background-color: #c58342;
+  background-color: #ff7043;
   color: white;
   border: none;
   padding: 0.4rem 1rem;
@@ -74,7 +75,7 @@
 }
 
 .reset-btn:hover {
-  background-color: #a04e00;
+  background-color: #ff7043;
 }
 
 /* Events Section */
@@ -93,4 +94,13 @@
 .no-events {
   color: #bf5f00;
   font-size: 1.2rem;
+}
+
+.contact-creator{
+  color: whilte;
+  /* background-color: blue; */
+}
+
+.contact-creator:hover{
+  background-color: #ece0dc;
 }

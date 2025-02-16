@@ -1,10 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { updateEvent } from "../../services/eventService";
+import LocationSelect from "../CreateEvent/LocationSelect";
+import VenueSelect from "../CreateEvent/VenueSelect";
+import { getLocations } from '../../services/locationService';
+import { getVenues, fetchVenues } from '../../services/venueService';
+
 const EditEventModal = ({ event, onClose, onSave }) => {
-  const [formData, setFormData] = useState({ ...event });
+  const [formData, setFormData] = useState({
+    ...event,
+    event_date: event.event_date ? event.event_date.split("T")[0] : "",
+  });
+  // console.log(event);
+  const [locations, setLocations] = useState([]);
+  const [venues, setVenues] = useState([]);
+  const [isVenueAvailable, setIsVenueAvailable] = useState(true);
+  const [vanue_n_location, setVanue_n_location] = useState([]);
+  useEffect(() => {
+    getLocations().then(setLocations).catch(console.error);
+    fetchVenues().then(data => {
+      setVanue_n_location(data);
+      // Set initial location_id based on event's venue_id
+      const currentVenue = data.find(v => v.venue_id === event.venue_id);
+      if (currentVenue) {
+        setFormData(prev => ({
+          ...prev,
+          location_id: currentVenue.location_id,
+        }));
+      }
+    }).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (formData.location_id) {
+      getVenues(formData.location_id).then(setVenues).catch(console.error);
+    } else {
+      setVenues([]);
+    }
+  }, [formData.location_id]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -56,14 +92,12 @@ const EditEventModal = ({ event, onClose, onSave }) => {
                   type="date"
                   name="event_date"
                   className="form-control"
-                  // value={formData.event_date}
-                  value={formData.event_date ? formData.event_date.split("T")[0] : ""}
+                  value={formData.event_date}
                   onChange={handleChange}
                 />
-                {/* {console.log(formData.event_date)} */}
               </div>
               <div className="mb-3">
-                <label htmlFor="start_time" className="form-label">start_time</label>
+                <label htmlFor="start_time" className="form-label">Start Time</label>
                 <input
                   id="start_time"
                   type="time"
@@ -74,7 +108,7 @@ const EditEventModal = ({ event, onClose, onSave }) => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="end_time" className="form-label">end_time</label>
+                <label htmlFor="end_time" className="form-label">End Time</label>
                 <input
                   id="end_time"
                   type="time"
@@ -84,10 +118,43 @@ const EditEventModal = ({ event, onClose, onSave }) => {
                   onChange={handleChange}
                 />
               </div>
+              <div className="mb-3">
+                <label htmlFor="max_attendees" className="form-label">Max Attendees</label>
+                <input
+                  id="max_attendees"
+                  type="number"
+                  name="max_attendees"
+                  className="form-control"
+                  value={formData.max_attendees}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="location_id" className="form-label"></label>
+                <LocationSelect
+                  id="location_id"
+                  name="location_id"
+                  value={formData.location_id}
+                  onChange={handleChange}
+                  locations={locations}
+                  selectedLocation={formData.location_id}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="venue_id" className="form-label"></label>
+                <VenueSelect
+                  id="venue_id"
+                  name="venue_id"
+                  value={formData.venue_id}
+                  onChange={handleChange}
+                  venues={venues}
+                  selectedVenue={formData.venue_id}
+                />
+              </div>
             </div>
             <div className="modal-footer">
-              <button className="btn " onClick={onClose}>Close</button>
-              <button className="btn " type="submit">Save Changes</button>
+              <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>
+              <button type="submit" className="btn btn-primary">Save Changes</button>
             </div>
           </form>
         </div>

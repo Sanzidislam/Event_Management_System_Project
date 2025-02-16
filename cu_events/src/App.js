@@ -45,7 +45,7 @@ const App = () => {
         <Route path='/Profile' element = {<Profile/>}/>
         <Route path='show-the-events' element = {<ShowEvents />}/>
       </Routes>
-        {/* <Footer/> */}
+        <Footer/>
     </Router>
 
   );

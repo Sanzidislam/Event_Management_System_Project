@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { fetchEvents } from "../../services/eventService";
 import { fetchVenues } from "../../services/venueService";
 import EventCard from "./EventCard";
@@ -11,6 +12,11 @@ import "../../all-css/ShowEvents.css";
 import { Link } from "react-router-dom";
 
 const ShowEvents = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchName = searchParams.get("searchName");
+  const searchLoc = searchParams.get("searchLoc");
+
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [venues, setVenues] = useState([]);
@@ -21,17 +27,24 @@ const ShowEvents = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [creatorSearch, setCreatorSearch] = useState("");
   useEffect(() => {
     loadEvents();
     loadVenues();
     loadLocations();
     loadCategories();
-  }, []);
+    if (searchName) {
+      setCreatorSearch(searchName);
+    }
+    if(searchLoc){
+      setSelectedLocation(searchLoc);
+    }
+    // console.log(searchName);
+  }, [searchName,searchLoc]);
 
   useEffect(() => {
     applyFilters();
-  }, [selectedLocation, selectedCategory, selectedDate, searchQuery, events]);
+  }, [selectedLocation, selectedCategory, selectedDate, searchQuery, events, creatorSearch, searchLoc]);
 
   const loadEvents = async () => {
     try {
@@ -94,6 +107,11 @@ const ShowEvents = () => {
       );
       // console.log(events);
     }
+    if(creatorSearch){
+      filtered = filtered.filter((event) =>
+        event.name.toLowerCase().includes(creatorSearch.toLowerCase())
+      );
+    }
 
     setFilteredEvents(filtered);
   };
@@ -103,12 +121,18 @@ const ShowEvents = () => {
     setSelectedCategory("");
     setSelectedDate("");
     setSearchQuery("");
+    setCreatorSearch("");
   };
 
   return (
     <div className="events-page">
       {/* Search Bar */}
       <div className="search-container">
+        <Link to = "/create-event">
+        <button className="btn btn-primary" style={{marginRight: "10px"}}>
+          Create Your Event
+        </button>
+        </Link>
         <input
           type="text"
           placeholder="Search events..."
@@ -116,7 +140,14 @@ const ShowEvents = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        {/* <button className="search-btn" onClick={applyFilters}>Search</button> */}
+          {/* <button className="search-btn" onClick={applyFilters}>Search</button> */}
+        <input
+          type="text"
+          placeholder="Search by creator..."
+          className="search-input"
+          value={creatorSearch}
+          onChange={(e) => setCreatorSearch(e.target.value)}
+        />
       </div>
 
       {/* Filters in One Line */}
@@ -157,7 +188,7 @@ const ShowEvents = () => {
           </div>
         )}
       </div>
-
+        
       {selectedEvent && (
         <EventDetailsModal
           event={selectedEvent}

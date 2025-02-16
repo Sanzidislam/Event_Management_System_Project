@@ -98,8 +98,8 @@ const ProfileInfo = ({ userProfile }) => {
   
 
   return (
-    <div className="card mx-auto shadow" style={{ maxWidth: "500px" }}>
-      <div className="card-body text-center">
+    <div className="card mx-auto shadow " style={{ maxWidth: "500px" }}>
+      <div className="card-body text-center mt-4">
         <div className="mb-3">
           <img
             src={profilePicturePreview}

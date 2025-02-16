@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Footer from './footer';
 import '../all-css/HomePage.css';
+import ShowEvents from './showEvents/ShowEvents';
 
 const HomePage = ({ isLoggedIn }) => {
   const [popularLocations, setPopularLocations] = useState([]);
@@ -65,6 +66,7 @@ const HomePage = ({ isLoggedIn }) => {
           {topCreators.length > 0 ? (
             topCreators.map((creator) => (
               <div key={creator.user_id} className="creator-card">
+                <Link to={`/show-events?searchName=${creator.name}`}>
                 <img
                   src={`http://localhost:5000/${creator.profile_picture}`}
                   alt={creator.name}
@@ -72,7 +74,9 @@ const HomePage = ({ isLoggedIn }) => {
                 />
                 <div className="creator-name">{creator.name}</div>
                 <div className="creator-events">{creator.count_events} events created</div>
+              </Link>
               </div>
+              
             ))
           ) : (
             <p className="no-creators-message">No top creators to display at the moment.</p>
@@ -87,8 +91,10 @@ const HomePage = ({ isLoggedIn }) => {
           {popularLocations.length > 0 ? (
             popularLocations.map((location) => (
               <div key={location.location_id} className="location-card">
+                <Link to={`/show-events?searchLoc=${location.location_id}`}>
                 <h3>{location.location_name}</h3>
                 <p>{location.total_events} events hosted here</p>
+                </Link>
               </div>
             ))
           ) : (
@@ -98,7 +104,7 @@ const HomePage = ({ isLoggedIn }) => {
       </section>
 
       <br />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

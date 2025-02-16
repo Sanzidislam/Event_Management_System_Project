@@ -10,7 +10,14 @@ const getAllEvents = (req, res) => {
 const getAvailableEventsForUser = (req, res) => {
   const user_id = req.user.user_id;
   // console.log(user_id);
-  db.query("select e.event_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees, e.venue_id,v.venue_name,l.location_id,l.location_name,u.user_id,u.name  ,ec.category_id from event e join user u on u.user_id = e.user_id join venue v on v.venue_id = e.venue_id join location l on l.location_id= v.location_id join event_category ec on e.category_id = ec.category_id where e.user_id != ?;",[user_id], (err, results) => {
+  db.query(`select e.event_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees, e.venue_id,
+v.venue_name,l.location_id,l.location_name,u.user_id,u.name  ,u.email,ec.category_id 
+from event e 
+join user u on u.user_id = e.user_id
+join venue v on v.venue_id = e.venue_id 
+join location l on l.location_id= v.location_id 
+join event_category ec on e.category_id = ec.category_id 
+where e.user_id !=? and e.event_date>current_date();`,[user_id], (err, results) => {
     if (err) return res.status(500).send("Error retrieving events");
     res.status(200).json(results);
   });
@@ -20,7 +27,27 @@ const getAvailableEventsForUser = (req, res) => {
 const getEventsOfUser = (req, res) => {
   const user_id = req.params;
   // console.log(user_id.user_id);
-  db.query("select e.event_id,e.event_name,e.description,e.event_date,e.start_time,e.end_time,e.max_attendees,e.venue_id,u.user_id,u.name from event e join user u on u.user_id= e.user_id where e.user_id = ? order by e.event_date desc",[user_id.user_id],
+  db.query(`
+    SELECT 
+    e.event_id,
+    e.event_name,
+    e.description,
+    DATE_FORMAT(e.event_date, '%Y-%m-%d') AS event_date, -- Format date as YYYY-MM-DD
+    e.start_time,
+    e.end_time,
+    e.max_attendees,
+    e.category_id,
+    e.venue_id,
+    u.user_id,
+    u.name 
+FROM 
+    event e 
+JOIN 
+    user u ON u.user_id = e.user_id 
+WHERE 
+    e.user_id = ?
+ORDER BY 
+    e.event_date DESC;`,[user_id.user_id],
     (err,results)=>{
     if (err) return res.status(500).send("Error retrieving events");
     res.status(200).json(results);
@@ -46,6 +73,7 @@ const createEvent = (req, res) => {
     "INSERT INTO event (event_name, description, event_date, start_time, end_time, max_attendees, venue_id, category_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [event_name, description, event_date, start_time, end_time, max_attendees, venue_id, category_id, user_id],
     (err) => {
+      // console.log(err);
       if (err) return res.status(500).send("Failed to create event");
       res.status(201).send("Event created successfully!");
     }

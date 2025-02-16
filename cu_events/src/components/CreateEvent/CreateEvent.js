@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getLocations } from '../../services/locationService';
-import { getVenues } from '../../services/venueService';
+import { getVenues,is_venueAvailable } from '../../services/venueService';
 import { getCategories } from '../../services/categoryService';
 import { createEvent } from '../../services/eventService';
 import EventForm from './EventForm';
@@ -27,7 +27,7 @@ const CreateEvent = () => {
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-  const [isVenueAvailable, setIsVenueAvailable] = useState(true);
+  const [isVenueAvailable, setIsVenueAvailable] = useState(false);
   useEffect(() => {
     getLocations().then(setLocations).catch(console.error);
     getCategories().then(setCategories).catch(console.error);
@@ -47,31 +47,27 @@ const CreateEvent = () => {
   // }, [eventData.venue_id, eventData.event_date]);
 
   const handleChange = (e) => setEventData({ ...eventData, [e.target.name]: e.target.value });
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await is_venueAvailable(eventData.venue_id, eventData.event_date);
+    console.log(response);
+
+    if (response.message === "Venue is not available on the given date") {
+      alert('Venue is not available on the selected date');
+      return; // Stop further execution
+    }
+
+    if (response.message === "Venue is available") {
       const message = await createEvent(eventData);
       alert(message);
       navigate('/');
-    } catch {
-      alert('Event creation failed!');
     }
-  };
-  //   const checkVenueAvailability = async (venueId, eventDate) => {
-  //   try {
-  //     const response = await axios.post("http://localhost:5000/events/check-venue/", {
-  //       venue_id: venueId,
-  //       event_date: eventDate,
-  //     });
-  //     console.log(venueId);
-  
-  //     setIsVenueAvailable(response.data.isAvailable);
-  //   } catch (error) {
-  //     console.error("Error checking venue availability:", error);
-  //     setIsVenueAvailable(false);
-  //   }
-  // };
-
+  } catch (error) {
+    console.error("Error checking venue availability:", error);
+    alert('Event creation failed!');
+  }
+};
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Create Event</h2>

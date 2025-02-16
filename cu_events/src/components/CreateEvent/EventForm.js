@@ -3,9 +3,9 @@ import '../../all-css/EventForm.css'; // Import the CSS file
 
 const EventForm = ({ eventData, handleChange, handleSubmit, children,isVenueAvailable }) => {
   return (
-    <form onSubmit={handleSubmit} className="event-form p-3 border rounded shadow-sm">
+    <form onSubmit={handleSubmit} className="event-form p-3 border rounded shadow-sm" style={{background: "#f7f0eb"}}>
       <div className="mb-2">
-        <label htmlFor="event_name" className="form-label">Event Name</label>
+        <label htmlFor="event_name" className="form-label">Event Name</label> 
         <input
           id="event_name"
           name="event_name"
@@ -79,7 +79,7 @@ const EventForm = ({ eventData, handleChange, handleSubmit, children,isVenueAvai
       </div>
 
       {children}
-      {!isVenueAvailable && <p className="text-danger small">Venue is already booked on this date.</p>}
+      {/* {!isVenueAvailable && <p className="text-danger small">Venue is already booked on this date.</p>} */}
 
       <button type="submit" className="btn btn-primary btn-sm w-100">Create Event</button>
     </form>
