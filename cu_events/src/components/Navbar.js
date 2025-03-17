@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import { fetchUpdateNotifications } from '../services/notificationService';
+import axios from 'axios';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [notifications, setNotifications] = useState([]);
   const [notificationsUpdated, setNotificationsUpdated] = useState(false);
   const token = localStorage.getItem('token');
+  const [userProfile, setUserProfile] = useState(null);
 
+  const navigate = useNavigate();
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.setItem('token', '');
+    console.log(userProfile);
   };
 
   // Fetch notifications when user logs in or updates
@@ -31,6 +35,21 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           console.error("Error fetching notifications:", error);
         });
     }
+    if(!token){
+      navigate("/login");
+      return;
+    }
+    axios
+      .get("http://localhost:5000/auth/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setUserProfile(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+        navigate("/login");
+      });
   }, [isLoggedIn, token]); // Dependency on isLoggedIn and token
 
   return (
@@ -112,8 +131,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                   <button 
                     className="btn btn-outline-secondary me-2"
                     style={{color: 'black'}}
-                    >
-                    Profile
+                  >
+                    {userProfile ? userProfile.name : 'Profile'}
                   </button>
                 </Link>
                 <Link to="/">

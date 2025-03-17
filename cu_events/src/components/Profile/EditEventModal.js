@@ -39,8 +39,12 @@ const EditEventModal = ({ event, onClose, onSave }) => {
   }, [formData.location_id]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    // const { name, value } = e.target;
+    // setFormData(prev => ({ ...prev, [name]: value }));
+    // if (name === "location_id") {
+    //   getVenues(value).then(setVenues).catch(console.error);
+    // }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -130,22 +134,22 @@ const EditEventModal = ({ event, onClose, onSave }) => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="location_id" className="form-label"></label>
+                <label htmlFor="location_id" className="form-label">Location</label>
                 <LocationSelect
-                  id="location_id"
-                  name="location_id"
-                  value={formData.location_id}
-                  onChange={handleChange}
+                  // id="location_id"
+                  // name="location_id"
+                  // value={formData.location_id}
                   locations={locations}
+                  onChange={handleChange}
                   selectedLocation={formData.location_id}
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="venue_id" className="form-label"></label>
+                <label htmlFor="venue_id" className="form-label">Venue</label>
                 <VenueSelect
                   id="venue_id"
                   name="venue_id"
-                  value={formData.venue_id}
+                  // value={formData.venue_id}
                   onChange={handleChange}
                   venues={venues}
                   selectedVenue={formData.venue_id}

@@ -27,7 +27,7 @@ const Footer = () => {
                 </a>
               </li>
               <li className="mx-3">
-                <a href="https://instagram.com/sanzidislam" target="_blank" rel="noopener noreferrer" className="text-dark">
+                <a href="https://instagram.com/iamsanzid" target="_blank" rel="noopener noreferrer" className="text-dark">
                   <i className="fab fa-instagram fa-2x"></i>
                 </a>
               </li>

@@ -174,7 +174,7 @@ const ShowEvents = () => {
       {/* Events Section */}
       <div className="events-section">
         {filteredEvents.length === 0 ? (
-          <p className="no-events">No events match the selected filters.</p>
+          <p className="no-events">No events available.</p>
         ) : (
           <div className="event-cards">
             {filteredEvents.map((event) => (
