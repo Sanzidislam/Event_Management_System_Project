@@ -22,14 +22,13 @@ A full-stack web application designed to streamline the process of creating, dis
 -   **Package Manager**: npm
 
 ---
-
 ## 📂 Project Structure
-Event_Management_System_Project/
-├── frontend/         # Contains all the React frontend code
-├── backend/          # Contains the Node.js/Express backend server and API logic
-└── SQL/              # Contains the database schema (.sql file)
-└── README.md
 
+- **Event_Management_System_Project/**
+  - `frontend/`: Contains all the React frontend code
+  - `backend/`: Contains the Node.js/Express backend server and API logic
+  - `SQL/`: Contains the database schema (.sql file)
+  - `README.md`
 ---
 
 ## ⚙️ Getting Started
