@@ -1,11 +1,11 @@
 -- Insert sample users
 -- use campus_event;
-INSERT INTO user (username, name, email, password, user_type, contact_number) VALUES
-('sanzid', 'Sanzid Islam', 'sanzid@example.com', 'password123', 'student', '01711111111'),
-('jane_smith', 'Jane Smith', 'jane@example.com', 'password456', 'teacher', '01722222222'),
-('arafat123', 'Arafat Sheikh', 'arafat@example.com', 'password789', 'student', '01733333333'),
-('lisa_brown', 'Lisa Brown', 'lisa@example.com', 'password321', 'teacher', '01744444444'),
-('nazmul', 'Nazmul Hasan', 'namzul@example.com', 'password654', 'student', '01755555555');
+-- INSERT INTO user (username, name, email, password, user_type, contact_number) VALUES
+-- ('sanzid', 'Sanzid Islam', 'sanzid@example.com', 'password123', 'student', '01711111111'),
+-- ('jane_smith', 'Jane Smith', 'jane@example.com', 'password456', 'teacher', '01722222222'),
+-- ('arafat123', 'Arafat Sheikh', 'arafat@example.com', 'password789', 'student', '01733333333'),
+-- ('lisa_brown', 'Lisa Brown', 'lisa@example.com', 'password321', 'teacher', '01744444444'),
+-- ('nazmul', 'Nazmul Hasan', 'namzul@example.com', 'password654', 'student', '01755555555');
 
 -- Insert sample students
 INSERT INTO student (student_id, enrollment_date, username) VALUES
@@ -30,7 +30,7 @@ INSERT INTO location (location_name) VALUES
 ('TeleTalk Pahar');
 
 -- Insert sample venues
-insert into Venue(venue_name,location_id) values
+insert into venue(venue_name,location_id) values
 ('Shahid Minar',1),
 ('Jarul Tola',1),
 ('room 413',3),

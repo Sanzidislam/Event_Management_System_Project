@@ -1,0 +1,152 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.homepage-container {
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  padding: 50px 20px;
+  border-bottom: 5px solid #ff7e5f;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+/* CTA Section */
+.cta-section {
+  margin: 30px 0;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.cta-text {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.cta-button.primary {
+  background-color: #ff7e5f;
+  color: white;
+}
+
+.cta-button.secondary {
+  background-color: white;
+  color: #ff7e5f;
+  border: 2px solid #ff7e5f;
+}
+
+.cta-button:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #ff7e5f;
+  font-weight: bold;
+}
+
+/* Grid Layout */
+.creators-grid,
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* Shared Card Styles */
+.creator-card,
+.location-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.creator-card:hover,
+.location-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Top Creators Specific */
+.creator-profile-pic {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+}
+
+.creator-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.creator-events {
+  font-size: 1rem;
+  color: #777;
+}
+
+/* Popular Locations Specific */
+.location-card h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.location-card p {
+  font-size: 1rem;
+  color: #777;
+}
+
+/* No Data Message */
+.no-creators-message,
+.no-locations-message {
+  font-size: 1rem;
+  color: #888;
+  margin-top: 20px;
+}

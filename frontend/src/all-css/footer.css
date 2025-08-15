@@ -1,0 +1,8 @@
+footer i {
+   transition: transform 0.2s ease-in-out;
+ }
+ 
+ footer i:hover {
+   transform: scale(1.2);
+ }
+ 
