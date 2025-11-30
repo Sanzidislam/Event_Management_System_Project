@@ -45,32 +45,34 @@ create table event(
 
 create table registers(
 	user_id int ,
-    event_id int,
-    registration_date date,
-    
-    primary key (user_id,event_id)
-);
-create table reviews(
-	review_id int primary key auto_increment,
-    event_id int,
-    user_id int,
-    review_text text,
-    rating int,
-    review_date timestamp default current_timestamp,
-    
-    foreign key (event_id) references event(event_id),
-    foreign key (user_id) references user(user_id)
-);
+		event_id int,
+		registration_date date,
+		
+		primary key (user_id,event_id),
+		foreign key(user_id) references user(user_id),
+		foreign key(event_id) references event(event_id)
+	);
+	create table reviews(
+		review_id int primary key auto_increment,
+		event_id int,
+		user_id int,
+		review_text text,
+		rating int,
+		review_date timestamp default current_timestamp,
+		
+		foreign key (event_id) references event(event_id),
+		foreign key (user_id) references user(user_id)
+	);
 
 
-create table notifications(
-	notification_id int primary key auto_increment,
-    event_id int,
-    notification_text varchar(255),
-    created_at timestamp default current_timestamp,
-    
-    foreign key (event_id) references event(event_id)
-);
+	create table notifications(
+		notification_id int primary key auto_increment,
+		event_id int,
+		notification_text varchar(255),
+		created_at timestamp default current_timestamp,
+		
+		foreign key (event_id) references event(event_id)
+	);
 
 insert into location(location_name) values ("Rab Hall");
 
